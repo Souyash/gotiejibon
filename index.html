@@ -816,35 +816,96 @@
   </div>
 
 
-  <!-- 2. User Login Modal -->
+  <!-- 2. User & Member Login Modal with Gmail OTP Authenticator -->
   <div class="modal-backdrop" id="user-modal" role="dialog" aria-modal="true" aria-labelledby="user-modal-title">
     <div class="modal-box">
       <button class="modal-close" aria-label="Close modal">&times;</button>
       <div class="modal-header">
-        <div class="modal-icon user-icon"><i class="fa-solid fa-circle-user"></i></div>
-        <h3 id="user-modal-title">Member & Volunteer Login</h3>
-        <p>Manage your membership and event registrations</p>
+        <div class="modal-icon user-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 id="user-modal-title">Member & Volunteer Portal</h3>
+        <p>Authenticate securely using Gmail OTP or Password</p>
+      </div>
+
+      <!-- Auth Method Selector Tabs -->
+      <div class="auth-mode-toggle">
+        <button type="button" class="auth-mode-btn active" id="tab-otp-mode" data-mode="otp">
+          <i class="fa-solid fa-envelope-circle-check"></i> Gmail OTP
+        </button>
+        <button type="button" class="auth-mode-btn" id="tab-pass-mode" data-mode="password">
+          <i class="fa-solid fa-key"></i> Password
+        </button>
       </div>
       
-      <form id="user-login-form" class="modal-form">
-        <div class="form-group">
-          <label for="user-email"><i class="fa-solid fa-envelope"></i> Registered Email</label>
-          <input type="email" id="user-email" required placeholder="member@example.com" />
-        </div>
-        
-        <div class="form-group">
-          <label for="user-password"><i class="fa-solid fa-lock"></i> Password</label>
-          <input type="password" id="user-password" required placeholder="••••••••" />
-        </div>
+      <!-- Section A: Gmail OTP Flow -->
+      <div id="otp-auth-section">
+        <!-- Step 1: Request OTP -->
+        <form id="otp-request-form" class="modal-form">
+          <div class="form-group">
+            <label for="otp-email"><i class="fa-solid fa-envelope"></i> Enter Your Gmail / Email</label>
+            <input type="email" id="otp-email" required placeholder="your.name@gmail.com" autocomplete="email" />
+          </div>
 
-        <div id="user-login-status" class="form-status" style="display: none;"></div>
+          <div id="otp-request-status" class="form-status" style="display: none;"></div>
 
-        <button type="submit" class="btn btn-primary btn-block">
-          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
-        </button>
-      </form>
+          <button type="submit" class="btn btn-primary btn-block" id="send-otp-btn">
+            <i class="fa-solid fa-paper-plane"></i> Send 6-Digit OTP Code
+          </button>
+        </form>
+
+        <!-- Step 2: Enter & Verify 6-Digit OTP -->
+        <div id="otp-verify-card" class="otp-auth-card" style="display: none;">
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+            Enter the 6-digit code sent to <strong id="otp-sent-target" style="color: var(--forest-green);"></strong>
+          </p>
+
+          <div class="otp-inputs-grid" id="otp-boxes-group">
+            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" autofocus />
+            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" pattern="[0-9]*" />
+            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" pattern="[0-9]*" />
+            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" pattern="[0-9]*" />
+            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" pattern="[0-9]*" />
+            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" pattern="[0-9]*" />
+          </div>
+
+          <div id="otp-verify-status" class="form-status" style="display: none; margin-bottom: 0.75rem;"></div>
+
+          <button type="button" class="btn btn-primary btn-block" id="verify-otp-btn">
+            <i class="fa-solid fa-circle-check"></i> Verify OTP & Sign In
+          </button>
+
+          <div class="otp-timer-wrap">
+            <span>Didn't receive code?</span>
+            <button type="button" class="otp-resend-btn" id="resend-otp-btn" disabled>
+              Resend in <span id="otp-countdown">60</span>s
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section B: Standard Password Login -->
+      <div id="password-auth-section" style="display: none;">
+        <form id="user-login-form" class="modal-form">
+          <div class="form-group">
+            <label for="user-email"><i class="fa-solid fa-envelope"></i> Registered Email</label>
+            <input type="email" id="user-email" required placeholder="member@example.com" />
+          </div>
+          
+          <div class="form-group">
+            <label for="user-password"><i class="fa-solid fa-lock"></i> Password</label>
+            <input type="password" id="user-password" required placeholder="••••••••" />
+          </div>
+
+          <div id="user-login-status" class="form-status" style="display: none;"></div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In with Password
+          </button>
+        </form>
+      </div>
+
     </div>
   </div>
+
 
   <!-- 3. Membership Registration Modal -->
   <div class="modal-backdrop" id="membership-modal" role="dialog" aria-modal="true" aria-labelledby="member-modal-title">

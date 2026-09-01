@@ -1363,10 +1363,106 @@ button, input, select, textarea {
 }
 
 .form-status.loading {
-  background-color: #e1f5fe;
-  color: #01579b;
-  border: 1px solid #81d4fa;
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  border: 1px solid #90caf9;
 }
+
+/* ---------------------------------------------------------
+   13.1 Gmail OTP Authenticator UI
+   --------------------------------------------------------- */
+.auth-mode-toggle {
+  display: flex;
+  background: #f1f8e9;
+  border-radius: var(--radius-pill);
+  padding: 3px;
+  margin-bottom: 1.25rem;
+  border: 1px solid #c8e6c9;
+}
+
+.auth-mode-btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.auth-mode-btn.active {
+  background: var(--forest-green);
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(27, 94, 32, 0.25);
+}
+
+.otp-auth-card {
+  text-align: center;
+  animation: modalScale 0.25s ease-out;
+}
+
+.otp-inputs-grid {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0;
+}
+
+.otp-box {
+  width: 44px;
+  height: 52px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--forest-green);
+  border: 2px solid #c8e6c9;
+  border-radius: var(--radius-sm);
+  background: #fdfdfd;
+  transition: all var(--transition-fast);
+}
+
+.otp-box:focus {
+  outline: none;
+  border-color: var(--forest-green);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+  transform: translateY(-2px);
+}
+
+.otp-timer-wrap {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.85rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.otp-resend-btn {
+  background: none;
+  border: none;
+  color: var(--forest-green);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.otp-resend-btn:disabled {
+  color: var(--text-light);
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
 
 /* Gallery Grid in Modal */
 .gallery-grid {
