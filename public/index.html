@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goti Jibon | Life's Main Speed and Everything - NGO</title>
+  
+  <!-- Meta tags for SEO & Mobile -->
+  <meta name="description" content="Goti Jibon is a premier NGO dedicated to community wellness, sports careers, active retirement, massive tree plantations, and health collaborations across West Bengal." />
+  <meta name="theme-color" content="#1b5e20" />
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for accessible and crisp visual cues -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-content">
+      <span><i class="fa-solid fa-seedling"></i> Join our upcoming 100,000 Tree Plantation Campaign in West Bengal!</span>
+      <div class="top-bar-links">
+        <a href="#membership-modal" class="open-modal-btn" data-modal="membership-modal"><i class="fa-solid fa-hand-holding-heart"></i> Volunteer</a>
+        <a href="#admin-modal" class="open-modal-btn" data-modal="admin-modal"><i class="fa-solid fa-lock"></i> Admin Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container navbar">
+      <a href="#" class="brand-logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-person-running"></i>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">Goti Jibon</span>
+          <span class="brand-sub">Community & Health NGO</span>
+        </div>
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="#hero" class="nav-link active"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li class="nav-item"><a href="#founder" class="nav-link"><i class="fa-solid fa-quote-left"></i> Founder's Message</a></li>
+          <li class="nav-item"><a href="#pillars" class="nav-link"><i class="fa-solid fa-shield-halved"></i> 5 Core Pillars</a></li>
+          <li class="nav-item"><a href="#dynamic-feed" class="nav-link"><i class="fa-solid fa-newspaper"></i> Latest Updates</a></li>
+          <li class="nav-item"><a href="#videos" class="nav-link"><i class="fa-solid fa-play"></i> Events & Media</a></li>
+          <li class="nav-item">
+            <button class="btn btn-sm btn-primary open-modal-btn" data-modal="membership-modal">
+              <i class="fa-solid fa-user-plus"></i> Join Us
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Ambient Green Human Graffiti Background Overlay -->
+  <div class="graffiti-backdrop" aria-hidden="true">
+    <div class="graffiti-art graffiti-runner-top">
+      <svg viewBox="0 0 300 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Graffiti Human Runner Silhouette -->
+        <circle cx="170" cy="50" r="22" fill="url(#green-spray-grad)" opacity="0.85" />
+        <!-- Headband / Urban drip -->
+        <path d="M145 48 C160 45 190 45 195 50" stroke="#4caf50" stroke-width="4" stroke-linecap="round" />
+        <path d="M192 50 C210 52 230 60 245 70" stroke="#81c784" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 4" />
+        <!-- Torso & Motion -->
+        <path d="M165 72 L140 160 L185 165 L200 95 Z" fill="url(#green-spray-grad)" opacity="0.9" />
+        <!-- Legs in Motion -->
+        <path d="M140 160 L110 220 L75 240 L65 245" stroke="url(#green-spray-grad)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M185 165 L220 230 L260 280 L290 285" stroke="url(#green-spray-grad)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Arms in Sprint -->
+        <path d="M175 90 L230 115 L260 100" stroke="url(#green-spray-grad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M150 95 L115 130 L90 120" stroke="url(#green-spray-grad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Graffiti Spray Splatters & Leaf Drips -->
+        <circle cx="210" cy="35" r="4" fill="#2e7d32" opacity="0.7" />
+        <circle cx="235" cy="45" r="6" fill="#4caf50" opacity="0.6" />
+        <circle cx="250" cy="30" r="3" fill="#81c784" opacity="0.8" />
+        <circle cx="270" cy="55" r="5" fill="#2e7d32" opacity="0.5" />
+        <circle cx="80" cy="270" r="5" fill="#4caf50" opacity="0.6" />
+        <circle cx="50" cy="260" r="7" fill="#1b5e20" opacity="0.5" />
+        <circle cx="35" cy="280" r="4" fill="#81c784" opacity="0.7" />
+        <!-- Graffiti Brush Stroke Lines -->
+        <path d="M40 295 C90 290 180 300 290 290" stroke="#4caf50" stroke-width="6" stroke-linecap="round" stroke-dasharray="15 10 30 10" opacity="0.6" />
+        <path d="M80 315 C130 310 200 315 270 310" stroke="#2e7d32" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 15 20 8" opacity="0.4" />
+        <defs>
+          <linearGradient id="green-spray-grad" x1="50" y1="30" x2="270" y2="300" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#2e7d32" />
+            <stop offset="0.5" stop-color="#4caf50" />
+            <stop offset="1" stop-color="#1b5e20" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="graffiti-art graffiti-yoga-left">
+      <svg viewBox="0 0 320 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Graffiti Human Meditation & Botanical Aura -->
+        <circle cx="160" cy="60" r="22" fill="url(#green-yoga-grad)" opacity="0.85" />
+        <!-- Lotus Halo / Spray Ring -->
+        <circle cx="160" cy="60" r="42" stroke="#4caf50" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 6" opacity="0.6" />
+        <!-- Seated Body Pose (Padmasana) -->
+        <path d="M160 85 L135 155 L185 155 Z" fill="url(#green-yoga-grad)" opacity="0.9" />
+        <path d="M135 155 C110 165 70 195 60 220 C50 245 90 260 160 260 C230 260 270 245 260 220 C250 195 210 165 185 155" stroke="url(#green-yoga-grad)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Meditative Raised Arms (Anjali Mudra) -->
+        <path d="M140 100 L95 130 L115 170" stroke="url(#green-yoga-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M180 100 L225 130 L205 170" stroke="url(#green-yoga-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Botanical Foliage Vines blooming from silhouette -->
+        <path d="M160 260 C160 300 130 330 90 340" stroke="#2e7d32" stroke-width="6" stroke-linecap="round" opacity="0.7" />
+        <path d="M160 260 C160 300 190 330 230 340" stroke="#4caf50" stroke-width="6" stroke-linecap="round" opacity="0.7" />
+        <!-- Graffiti Drip & Splatter -->
+        <circle cx="85" cy="335" r="5" fill="#4caf50" />
+        <circle cx="235" cy="335" r="5" fill="#2e7d32" />
+        <circle cx="160" cy="350" r="4" fill="#81c784" />
+        <circle cx="50" cy="190" r="6" fill="#1b5e20" opacity="0.5" />
+        <circle cx="270" cy="190" r="6" fill="#4caf50" opacity="0.5" />
+        <defs>
+          <linearGradient id="green-yoga-grad" x1="60" y1="40" x2="260" y2="340" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4caf50" />
+            <stop offset="0.6" stop-color="#2e7d32" />
+            <stop offset="1" stop-color="#00796b" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="graffiti-art graffiti-tree-planter-right">
+      <svg viewBox="0 0 340 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Graffiti Human Planting a Tree -->
+        <!-- Human Planter Kneeling -->
+        <circle cx="100" cy="90" r="20" fill="url(#green-planter-grad)" opacity="0.85" />
+        <path d="M100 115 L125 180 L80 190 Z" fill="url(#green-planter-grad)" opacity="0.9" />
+        <path d="M80 190 L50 240 L40 270" stroke="url(#green-planter-grad)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M125 180 L160 230 L180 270" stroke="url(#green-planter-grad)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Arms nurturing sapling -->
+        <path d="M110 135 L170 170 L210 210" stroke="url(#green-planter-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Tree Growing from Hands with graffiti foliage crown -->
+        <path d="M210 270 L210 150" stroke="#1b5e20" stroke-width="12" stroke-linecap="round" />
+        <!-- Foliage Canopies (Stencil style) -->
+        <circle cx="210" cy="110" r="45" fill="#4caf50" opacity="0.75" />
+        <circle cx="180" cy="90" r="35" fill="#2e7d32" opacity="0.7" />
+        <circle cx="245" cy="85" r="32" fill="#81c784" opacity="0.75" />
+        <circle cx="210" cy="60" r="28" fill="#a5d6a7" opacity="0.8" />
+        <!-- Splatters & organic spray -->
+        <circle cx="280" cy="70" r="5" fill="#4caf50" />
+        <circle cx="295" cy="85" r="3" fill="#2e7d32" />
+        <circle cx="150" cy="65" r="4" fill="#81c784" />
+        <path d="M30 285 C100 280 230 285 320 280" stroke="#2e7d32" stroke-width="6" stroke-linecap="round" stroke-dasharray="20 10 15 12" opacity="0.5" />
+        <defs>
+          <linearGradient id="green-planter-grad" x1="40" y1="70" x2="300" y2="300" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#2e7d32" />
+            <stop offset="0.5" stop-color="#4caf50" />
+            <stop offset="1" stop-color="#1b5e20" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+    
+    <!-- 1. Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="hero-overlay"></div>
+      
+      <!-- In-Hero Graffiti Stencil Accents -->
+      <div class="hero-graffiti-art" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none" class="hero-graffiti-human">
+          <circle cx="100" cy="40" r="18" fill="#2e7d32" opacity="0.3" />
+          <path d="M100 62 L80 120 L115 125 Z" fill="#2e7d32" opacity="0.35" />
+          <path d="M80 120 L55 170 L30 180" stroke="#2e7d32" stroke-width="16" stroke-linecap="round" opacity="0.3" />
+          <path d="M115 125 L145 165 L175 190" stroke="#2e7d32" stroke-width="16" stroke-linecap="round" opacity="0.3" />
+          <path d="M95 75 L140 95 L170 85" stroke="#4caf50" stroke-width="12" stroke-linecap="round" opacity="0.3" />
+          <path d="M85 80 L55 105 L35 95" stroke="#4caf50" stroke-width="12" stroke-linecap="round" opacity="0.3" />
+          <circle cx="180" cy="50" r="4" fill="#4caf50" opacity="0.5" />
+          <circle cx="195" cy="65" r="6" fill="#2e7d32" opacity="0.4" />
+          <circle cx="20" cy="160" r="5" fill="#81c784" opacity="0.4" />
+        </svg>
+      </div>
+
+      <div class="container hero-container">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span> Registered Non-Governmental Organization for Health & Wellness
+        </div>
+        
+        <h1 class="hero-title">
+          <span class="brand-highlight">Goti Jibon:</span> Life's main speed and everything.
+        </h1>
+        
+        <p class="hero-subtitle">
+          An NGO dedicated to community, physical vitality, active aging, sustainable greenery, and collaborative progress across West Bengal and beyond.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#pillars" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-compass"></i> Explore Our 5 Pillars
+          </a>
+          <button class="btn btn-outline btn-lg open-modal-btn" data-modal="membership-modal">
+            <i class="fa-solid fa-handshake"></i> Become a Member
+          </button>
+        </div>
+
+        <!-- Quick Stats Counter -->
+        <div class="hero-stats">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-tree"></i></div>
+            <div class="stat-num">50,000+</div>
+            <div class="stat-label">Trees Planted</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-medal"></i></div>
+            <div class="stat-num">12,000+</div>
+            <div class="stat-label">Athletes Guided</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+            <div class="stat-num">3,500+</div>
+            <div class="stat-label">Active Seniors</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-landmark"></i></div>
+            <div class="stat-num">23 Districts</div>
+            <div class="stat-label">Govt. Synergy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Founder's Message Section -->
+    <section class="founder-section" id="founder">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-feather-pointed"></i> Guiding Vision</span>
+          <h2 class="section-title">Founder's Message</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="founder-card">
+          <div class="founder-quote-mark">
+            <i class="fa-solid fa-quote-right"></i>
+          </div>
+          
+          <div class="founder-content">
+            <h3 class="founder-headline">"True momentum in life is the harmonious balance of mind, movement, and mother earth."</h3>
+            
+            <p class="founder-text">
+              Welcome to <strong>Goti Jibon</strong>. When we founded this movement, our core realization was simple yet profound: <em>life is defined by motion (Goti), vitality, and purpose</em>. Without health, strength, and an unpolluted environment, society loses its natural pace and joy.
+            </p>
+            
+            <p class="founder-text">
+              Too many gifted young athletes give up their dreams because their parents fear financial instability; too many retired citizens feel isolated and unengaged despite possessing lifetimes of wisdom; and our Mother Earth suffers as concrete replaces lush canopies.
+            </p>
+
+            <p class="founder-text">
+              <strong>Goti Jibon</strong> stands as the bridge. We empower parents to see sports as a viable and glorious career, welcome our respected seniors to lead vibrant community wellness drives, partner directly with state initiatives to bring fitness to every corner of West Bengal, and return to roots through pure food, meditation, and massive tree plantation drives. Together, let us make life energetic, dignified, and green.
+            </p>
+
+            <div class="founder-signature-block">
+              <div class="founder-avatar">
+                <i class="fa-solid fa-user-tie"></i>
+              </div>
+              <div class="founder-info">
+                <h4 class="founder-name">The Founding Directorate</h4>
+                <p class="founder-role">Goti Jibon Welfare Trust & Community Foundation</p>
+                <span class="founder-motto"><i class="fa-solid fa-leaf"></i> Dedicated to Health, Humanity & Green Bengal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. The 5 Core Pillars Section -->
+    <section class="pillars-section" id="pillars">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-bullseye"></i> Our Core Mission</span>
+          <h2 class="section-title">The 5 Core Pillars</h2>
+          <p class="section-desc">The five foundational commitments driving every campaign, project, and outreach at Goti Jibon.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="pillars-grid">
+          
+          <!-- Pillar 1 -->
+          <div class="pillar-card" data-pillar="1">
+            <div class="pillar-number">01</div>
+            <div class="pillar-icon-box sports-theme">
+              <i class="fa-solid fa-person-running"></i>
+            </div>
+            <div class="pillar-badge">Youth & Parents</div>
+            <h3 class="pillar-title">Building Careers in Sports & Fitness</h3>
+            <p class="pillar-desc">
+              Empowering youngsters to turn athletic passion into flourishing professions while actively counseling and supporting parents on career security, nutrition, and professional coaching paths.
+            </p>
+            <ul class="pillar-points">
+              <li><i class="fa-solid fa-circle-check"></i> Grassroots talent scouting camps</li>
+              <li><i class="fa-solid fa-circle-check"></i> Parental counseling seminars</li>
+              <li><i class="fa-solid fa-circle-check"></i> Professional sports scholarships</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="pillar-card" data-pillar="2">
+            <div class="pillar-number">02</div>
+            <div class="pillar-icon-box elders-theme">
+              <i class="fa-solid fa-people-roof"></i>
+            </div>
+            <div class="pillar-badge">Active Aging</div>
+            <h3 class="pillar-title">Empowering Retired Individuals</h3>
+            <p class="pillar-desc">
+              Inviting senior citizens and retired champions of society to lead fulfilling, healthy, and dignified lives by channeling their wisdom into community mentorship and social service.
+            </p>
+            <ul class="pillar-points">
+              <li><i class="fa-solid fa-circle-check"></i> Senior yoga & vitality clubs</li>
+              <li><i class="fa-solid fa-circle-check"></i> Community mentorship circles</li>
+              <li><i class="fa-solid fa-circle-check"></i> Regular health checkup camps</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="pillar-card" data-pillar="3">
+            <div class="pillar-number">03</div>
+            <div class="pillar-icon-box green-theme">
+              <i class="fa-solid fa-tree"></i>
+            </div>
+            <div class="pillar-badge">Environment</div>
+            <h3 class="pillar-title">Turning the World Green</h3>
+            <p class="pillar-desc">
+              Combating climate change and urban heat through massive community-driven tree plantation drives, protecting native biodiversity, and restoring forest canopies across every locality.
+            </p>
+            <ul class="pillar-points">
+              <li><i class="fa-solid fa-circle-check"></i> Native sapling distribution</li>
+              <li><i class="fa-solid fa-circle-check"></i> School & college plantation drives</li>
+              <li><i class="fa-solid fa-circle-check"></i> Urban green corridor adoption</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="pillar-card" data-pillar="4">
+            <div class="pillar-number">04</div>
+            <div class="pillar-icon-box gov-theme">
+              <i class="fa-solid fa-landmark-flag"></i>
+            </div>
+            <div class="pillar-badge">Synergy</div>
+            <h3 class="pillar-title">State Government Collaboration</h3>
+            <p class="pillar-desc">
+              Partnering actively with administrative bodies, sports departments, and healthcare authorities to make every district and panchayat in West Bengal healthy, active, and resilient.
+            </p>
+            <ul class="pillar-points">
+              <li><i class="fa-solid fa-circle-check"></i> Public park fitness integration</li>
+              <li><i class="fa-solid fa-circle-check"></i> District-level health marathons</li>
+              <li><i class="fa-solid fa-circle-check"></i> Policy & grassroot implementation</li>
+            </ul>
+          </div>
+
+          <!-- Pillar 5 -->
+          <div class="pillar-card" data-pillar="5">
+            <div class="pillar-number">05</div>
+            <div class="pillar-icon-box health-theme">
+              <i class="fa-solid fa-spa"></i>
+            </div>
+            <div class="pillar-badge">Holistic Living</div>
+            <h3 class="pillar-title">Fresh Food, Exercise & Meditation</h3>
+            <p class="pillar-desc">
+              Revitalizing day-to-day wellness by advocating chemical-free farm produce, daily calisthenics, deep breathing (pranayama), and mindfulness meditation for mental tranquility.
+            </p>
+            <ul class="pillar-points">
+              <li><i class="fa-solid fa-circle-check"></i> Organic diet & nutrition workshops</li>
+              <li><i class="fa-solid fa-circle-check"></i> Daily open-air fitness sessions</li>
+              <li><i class="fa-solid fa-circle-check"></i> Guided stress-relief meditation</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Dynamic Feed Section (Articles from API & Media Updates) -->
+    <section class="feed-section" id="dynamic-feed">
+      <div class="container">
+        
+        <div class="section-header-flex">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-bolt"></i> Live Feed</span>
+            <h2 class="section-title">Fresh Dispatches & Articles</h2>
+            <p class="section-desc">Live updates pulled dynamically from our backend database.</p>
+          </div>
+          <div class="feed-actions">
+            <button class="btn btn-outline btn-sm" id="refresh-feed-btn" title="Reload live articles">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh Feed
+            </button>
+            <button class="btn btn-secondary btn-sm open-modal-btn" data-modal="admin-modal">
+              <i class="fa-solid fa-plus"></i> Post Article (Admin)
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Articles Container (Injected by app.js via GET /api/articles) -->
+        <div class="articles-grid" id="articles-container">
+          <!-- Loading skeleton state -->
+          <div class="article-card skeleton">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line footer"></div>
+          </div>
+          <div class="article-card skeleton">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line footer"></div>
+          </div>
+          <div class="article-card skeleton">
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line text"></div>
+            <div class="skeleton-line footer"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. Event Videos & Media Highlights Section -->
+    <section class="media-section" id="videos">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag"><i class="fa-solid fa-video"></i> On-Ground Impact</span>
+          <h2 class="section-title">Event Highlights & Video Spotlights</h2>
+          <p class="section-desc">Catch our grassroots initiatives in action across communities.</p>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="video-grid">
+          
+          <div class="video-card">
+            <div class="video-thumbnail-wrapper">
+              <div class="video-placeholder-thumb green-bg">
+                <i class="fa-solid fa-tree fa-3x"></i>
+                <div class="play-button">
+                  <i class="fa-solid fa-play"></i>
+                </div>
+              </div>
+              <span class="video-duration">4:15</span>
+            </div>
+            <div class="video-info">
+              <span class="video-tag">Environmental Action</span>
+              <h4 class="video-title">Mega Tree Plantation Drive: 10,000 Saplings in Howrah & Hooghly</h4>
+              <p class="video-desc">Over 500 student volunteers and local residents joined hands to create urban oxygen corridors.</p>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-thumbnail-wrapper">
+              <div class="video-placeholder-thumb orange-bg">
+                <i class="fa-solid fa-dumbbell fa-3x"></i>
+                <div class="play-button">
+                  <i class="fa-solid fa-play"></i>
+                </div>
+              </div>
+              <span class="video-duration">5:40</span>
+            </div>
+            <div class="video-info">
+              <span class="video-tag">Youth Athletics</span>
+              <h4 class="video-title">West Bengal Youth Fitness League & Parental Orientation</h4>
+              <p class="video-desc">National coaches train young sprint athletes while experts guide parents on sports careers.</p>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="video-thumbnail-wrapper">
+              <div class="video-placeholder-thumb blue-bg">
+                <i class="fa-solid fa-om fa-3x"></i>
+                <div class="play-button">
+                  <i class="fa-solid fa-play"></i>
+                </div>
+              </div>
+              <span class="video-duration">3:50</span>
+            </div>
+            <div class="video-info">
+              <span class="video-tag">Elderly Health</span>
+              <h4 class="video-title">Sunrise Yoga & Meditation Circle with Retired Veterans</h4>
+              <p class="video-desc">Daily morning wellness camp fostering longevity, peace, and mutual companionship among seniors.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <div class="container cta-flex">
+        <div class="cta-text">
+          <h2>Ready to Make West Bengal Greener & Healthier?</h2>
+          <p>Join as a volunteer, donate saplings, or enroll in our free sports and meditation workshops.</p>
+        </div>
+        <div class="cta-btn-wrap">
+          <button class="btn btn-light btn-lg open-modal-btn" data-modal="membership-modal">
+            <i class="fa-solid fa-circle-arrow-right"></i> Register Membership Today
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Portals -->
+  <footer class="site-footer" id="footer-portals">
+    <div class="container footer-grid">
+      
+      <!-- Column 1: Brand & Mission -->
+      <div class="footer-col footer-brand-col">
+        <div class="footer-logo">
+          <div class="logo-icon"><i class="fa-solid fa-person-running"></i></div>
+          <span class="footer-brand-name">Goti Jibon</span>
+        </div>
+        <p class="footer-tagline">"Life's main speed and everything."</p>
+        <p class="footer-about">
+          A dedicated NGO transforming health, youth sports careers, active retirement, and eco-restoration across West Bengal.
+        </p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <!-- Column 2: Key Portals -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Access Portals</h4>
+        <ul class="footer-links">
+          <li><a href="#user-modal" class="open-modal-btn" data-modal="user-modal"><i class="fa-solid fa-arrow-right"></i> User Login</a></li>
+          <li><a href="#admin-modal" class="open-modal-btn" data-modal="admin-modal"><i class="fa-solid fa-arrow-right"></i> Admin Login</a></li>
+          <li><a href="#membership-modal" class="open-modal-btn" data-modal="membership-modal"><i class="fa-solid fa-arrow-right"></i> Membership Registration</a></li>
+          <li><a href="#gallery-modal" class="open-modal-btn" data-modal="gallery-modal"><i class="fa-solid fa-arrow-right"></i> Photo & Media Gallery</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: The 5 Pillars -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Core Focus</h4>
+        <ul class="footer-links">
+          <li><a href="#pillars"><i class="fa-solid fa-angle-right"></i> Sports Career & Parenting</a></li>
+          <li><a href="#pillars"><i class="fa-solid fa-angle-right"></i> Active Retirement Life</a></li>
+          <li><a href="#pillars"><i class="fa-solid fa-angle-right"></i> Tree Plantation Drives</a></li>
+          <li><a href="#pillars"><i class="fa-solid fa-angle-right"></i> Govt. Fitness Collaborations</a></li>
+          <li><a href="#pillars"><i class="fa-solid fa-angle-right"></i> Fresh Food & Meditation</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Contact & Location -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact & Secretariat</h4>
+        <p class="footer-contact-item"><i class="fa-solid fa-location-dot"></i> Central Secretariat, Kolkata, West Bengal, India</p>
+        <p class="footer-contact-item"><i class="fa-solid fa-envelope"></i> contact@gotijibon.org</p>
+        <p class="footer-contact-item"><i class="fa-solid fa-phone"></i> +91 (033) 2450-GOTI</p>
+        <p class="footer-contact-item"><i class="fa-solid fa-clock"></i> Mon – Sat: 9:00 AM – 6:00 PM</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-flex">
+        <p>&copy; 2026 Goti Jibon NGO. All Rights Reserved. Dedicated to Public Welfare & Health.</p>
+        <p class="footer-tech">Full-Stack Platform built with Node.js, Express & MongoDB</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. Admin Login Modal (Wired to /api/admin/login) -->
+  <div class="modal-backdrop" id="admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon admin-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 id="admin-modal-title">Admin Portal Login</h3>
+        <p>Access the Goti Jibon management dashboard</p>
+      </div>
+      
+      <form id="admin-login-form" class="modal-form">
+        <div class="form-group">
+          <label for="admin-email"><i class="fa-solid fa-envelope"></i> Admin Email or Username</label>
+          <input type="text" id="admin-email" name="email" required placeholder="admin@gotijibon.org" autocomplete="username" />
+        </div>
+        
+        <div class="form-group">
+          <label for="admin-password"><i class="fa-solid fa-key"></i> Password</label>
+          <input type="password" id="admin-password" name="password" required placeholder="••••••••" autocomplete="current-password" />
+        </div>
+
+        <div id="admin-login-status" class="form-status" style="display: none;"></div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="admin-submit-btn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login to Console
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. User Login Modal -->
+  <div class="modal-backdrop" id="user-modal" role="dialog" aria-modal="true" aria-labelledby="user-modal-title">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon user-icon"><i class="fa-solid fa-circle-user"></i></div>
+        <h3 id="user-modal-title">Member & Volunteer Login</h3>
+        <p>Manage your membership and event registrations</p>
+      </div>
+      
+      <form id="user-login-form" class="modal-form">
+        <div class="form-group">
+          <label for="user-email"><i class="fa-solid fa-envelope"></i> Registered Email</label>
+          <input type="email" id="user-email" required placeholder="member@example.com" />
+        </div>
+        
+        <div class="form-group">
+          <label for="user-password"><i class="fa-solid fa-lock"></i> Password</label>
+          <input type="password" id="user-password" required placeholder="••••••••" />
+        </div>
+
+        <div id="user-login-status" class="form-status" style="display: none;"></div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Membership Registration Modal -->
+  <div class="modal-backdrop" id="membership-modal" role="dialog" aria-modal="true" aria-labelledby="member-modal-title">
+    <div class="modal-box modal-lg">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon member-icon"><i class="fa-solid fa-id-card"></i></div>
+        <h3 id="member-modal-title">Membership & Volunteer Registration</h3>
+        <p>Become a vital part of the Goti Jibon community movement</p>
+      </div>
+      
+      <form id="membership-form" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="member-name"><i class="fa-solid fa-user"></i> Full Name</label>
+            <input type="text" id="member-name" required placeholder="e.g. Soumen Chatterjee" />
+          </div>
+          <div class="form-group">
+            <label for="member-phone"><i class="fa-solid fa-phone"></i> Mobile Phone</label>
+            <input type="tel" id="member-phone" required placeholder="+91 98765 43210" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="member-reg-email"><i class="fa-solid fa-envelope"></i> Email Address</label>
+            <input type="email" id="member-reg-email" required placeholder="your.email@example.com" />
+          </div>
+          <div class="form-group">
+            <label for="member-district"><i class="fa-solid fa-map-location-dot"></i> District / City</label>
+            <input type="text" id="member-district" required placeholder="e.g. Kolkata / Howrah / Darjeeling" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="member-interest"><i class="fa-solid fa-heart"></i> Primary Pillar of Interest</label>
+          <select id="member-interest" class="form-select" required>
+            <option value="">Select your area of interest...</option>
+            <option value="sports">1. Youth Sports Careers & Parental Guidance</option>
+            <option value="seniors">2. Senior Citizen Wellness & Mentorship</option>
+            <option value="trees">3. Tree Plantation & Environmental Restoration</option>
+            <option value="govt">4. Public & State Health Collaboration</option>
+            <option value="lifestyle">5. Fresh Food, Exercise & Daily Meditation</option>
+          </select>
+        </div>
+
+        <div id="membership-status" class="form-status" style="display: none;"></div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          <i class="fa-solid fa-check-circle"></i> Complete Free Registration
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Photo & Media Gallery Modal -->
+  <div class="modal-backdrop" id="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-modal-title">
+    <div class="modal-box modal-lg">
+      <button class="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon gallery-icon"><i class="fa-solid fa-images"></i></div>
+        <h3 id="gallery-modal-title">Goti Jibon Media Gallery</h3>
+        <p>Visual moments from our grassroots campaigns across Bengal</p>
+      </div>
+      
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <div class="gallery-card-ph green-grad">
+            <i class="fa-solid fa-seedling"></i>
+            <span>50K Sapling Drive</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-card-ph orange-grad">
+            <i class="fa-solid fa-medal"></i>
+            <span>Youth Athletic Trials</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-card-ph blue-grad">
+            <i class="fa-solid fa-person-walking"></i>
+            <span>Senior Yoga Camp</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-card-ph emerald-grad">
+            <i class="fa-solid fa-apple-whole"></i>
+            <span>Fresh Food Awareness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Frontend JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>

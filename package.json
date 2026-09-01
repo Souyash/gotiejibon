@@ -1,0 +1,32 @@
+{
+  "name": "goti-jibon",
+  "version": "1.0.0",
+  "description": "Mobile-first, responsive full-stack web platform for Goti Jibon NGO",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "ngo",
+    "health",
+    "fitness",
+    "environment",
+    "west-bengal",
+    "community",
+    "express",
+    "mongodb",
+    "mongoose"
+  ],
+  "author": "Goti Jibon Development Team",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
