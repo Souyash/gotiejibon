@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="og-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#081c0c" />
+      <stop offset="40%" stop-color="#144d1d" />
+      <stop offset="100%" stop-color="#1b5e20" />
+    </linearGradient>
+
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe082" />
+      <stop offset="100%" stop-color="#ffb74d" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#og-bg)" />
+
+  <!-- Ambient Botanical Overlay Shapes -->
+  <circle cx="1100" cy="100" r="300" fill="#4caf50" opacity="0.08" />
+  <circle cx="100" cy="550" r="250" fill="#81c784" opacity="0.06" />
+
+  <!-- Left: Stylized Emblem (180x180) -->
+  <g transform="translate(100, 150)">
+    <!-- Base -->
+    <circle cx="120" cy="120" r="110" fill="#0a2e12" stroke="#81c784" stroke-width="4" />
+    <circle cx="120" cy="120" r="95" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-dasharray="8 8" fill="none" />
+    
+    <!-- Bengali 'গ' Leaf & Runner -->
+    <path d="M 68 168 C 54 134, 56 96, 86 74 C 108 60, 130 67, 130 89 C 130 106, 110 115, 94 118 C 77 120, 65 144, 75 166 Z" fill="#4caf50" />
+    <path d="M 154 82 L 154 163 C 154 171, 147 178, 138 178 C 130 178, 123 171, 123 163 L 123 113" stroke="#ffffff" stroke-width="15" stroke-linecap="round" fill="none" />
+    <path d="M 96 79 Q 130 67, 163 74" stroke="#ffffff" stroke-width="12" stroke-linecap="round" fill="none" />
+    <circle cx="154" cy="53" r="15" fill="url(#gold-grad)" />
+    <circle cx="183" cy="65" r="6" fill="#ffe082" />
+  </g>
+
+  <!-- Right: Typography & Messaging -->
+  <g transform="translate(420, 170)">
+    <!-- Sub-tag -->
+    <rect x="0" y="0" width="340" height="42" rx="21" fill="rgba(255,255,255,0.12)" stroke="rgba(129, 199, 132, 0.4)" stroke-width="1.5" />
+    <text x="25" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#a5d6a7" letter-spacing="1">
+      🌿 REGISTERED NGO &bull; WEST BENGAL
+    </text>
+
+    <!-- Main Title: Bengali + English -->
+    <text x="0" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="62" font-weight="800" fill="#ffffff" letter-spacing="-1">
+      গতিই জীবন <tspan fill="#ffb74d">Goti E Jibon</tspan>
+    </text>
+
+    <!-- Tagline -->
+    <text x="0" y="175" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="500" fill="#c8e6c9" font-style="italic">
+      "Life's main speed and everything."
+    </text>
+
+    <!-- 5 Objectives Badge List -->
+    <g transform="translate(0, 230)">
+      <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="19" font-weight="600" fill="#ffffff">
+        🏃 Sports Careers &bull; 🧘 Senior Vitality &bull; 🌳 100k Trees &bull; 🏛️ Govt. Synergy &bull; 🥗 Holistic Health
+      </text>
+    </g>
+
+    <!-- Domain Footer -->
+    <g transform="translate(0, 290)">
+      <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#ffb74d">
+        https://gotiejibon.com
+      </text>
+    </g>
+  </g>
+</svg>

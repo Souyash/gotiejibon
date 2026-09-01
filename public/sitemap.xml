@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Home Page -->
+  <url>
+    <loc>https://gotiejibon.com/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://gotiejibon.com/logo.svg</image:loc>
+      <image:title>গতিই জীবন - Goti E Jibon Official Logo</image:title>
+      <image:caption>Goti E Jibon NGO - Life's main speed and everything</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Pillar 01: Sports & Fitness Careers -->
+  <url>
+    <loc>https://gotiejibon.com/sports-careers.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Pillar 02: Active Retirement & Seniors -->
+  <url>
+    <loc>https://gotiejibon.com/active-retirement.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Pillar 03: Tree Plantation & Green Earth -->
+  <url>
+    <loc>https://gotiejibon.com/green-world.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Pillar 04: West Bengal Health Collaboration -->
+  <url>
+    <loc>https://gotiejibon.com/bengal-health-collaboration.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Pillar 05: Fresh Food, Exercise & Meditation -->
+  <url>
+    <loc>https://gotiejibon.com/holistic-lifestyle.html</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,15 @@
+# Robots.txt for gotiejibon.com
+# Allow all search engines (Google, Bing, Yahoo, DuckDuckGo, Baidu)
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /admin
+
+# Googlebot specific directives
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+
+# Sitemap index location
+Sitemap: https://gotiejibon.com/sitemap.xml
