@@ -1,43 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
   <defs>
-    <linearGradient id="goti-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1b5e20" />
-      <stop offset="60%" stop-color="#2e7d32" />
-      <stop offset="100%" stop-color="#4caf50" />
+    <!-- Background Emerald Nature Gradient -->
+    <linearGradient id="emblem-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a2e12" />
+      <stop offset="45%" stop-color="#1b5e20" />
+      <stop offset="100%" stop-color="#2e7d32" />
     </linearGradient>
-    <linearGradient id="orange-spark" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff9800" />
-      <stop offset="100%" stop-color="#e65100" />
+
+    <!-- Vibrant Leaf & Motion Gradient -->
+    <linearGradient id="leaf-motion" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4caf50" />
+      <stop offset="50%" stop-color="#81c784" />
+      <stop offset="100%" stop-color="#c8e6c9" />
+    </linearGradient>
+
+    <!-- Vitality Golden Sun Gradient -->
+    <linearGradient id="sun-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe082" />
+      <stop offset="50%" stop-color="#ffb74d" />
+      <stop offset="100%" stop-color="#f57c00" />
     </linearGradient>
   </defs>
 
-  <!-- Circular Badge with Nature Green Gradient -->
-  <circle cx="32" cy="32" r="30" fill="url(#goti-bg)" />
-  <circle cx="32" cy="32" r="29" stroke="#81c784" stroke-width="1.5" fill="none" opacity="0.6" />
+  <!-- Circular Base Badge -->
+  <circle cx="50" cy="50" r="48" fill="url(#emblem-bg)" />
+  <circle cx="50" cy="50" r="47" stroke="rgba(129, 199, 132, 0.5)" stroke-width="2" fill="none" />
 
-  <!-- Botanical Vitality Leaf / Arc -->
-  <path d="M12 40 C14 26, 26 14, 40 12 C32 20, 26 30, 24 44 Z" fill="#81c784" opacity="0.35" />
+  <!-- The Stylized Bengali 'গ' Letter as Athlete & Living Leaf -->
+  <!-- Left Leaf Curve & Body of 'গ' -->
+  <path d="M 28 70 C 22 56, 23 40, 36 31 C 45 25, 54 28, 54 37 C 54 44, 46 48, 39 49 C 32 50, 27 60, 31 69 Z" 
+        fill="url(#leaf-motion)" />
 
-  <!-- Dynamic Athletic Runner Silhouette in Pure White & Vitality Gold -->
-  <!-- Head -->
-  <circle cx="38" cy="18" r="4.5" fill="#ffffff" />
-  
-  <!-- Torso & Core Motion -->
-  <path d="M37 23 L32 37 L38 38 L43 27 Z" fill="#ffffff" />
-  
-  <!-- Back Leg in Forward Drive -->
-  <path d="M32 37 L23 44 L16 46" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-  
-  <!-- Front Leg in High Knee Lift -->
-  <path d="M38 38 L43 47 L51 52" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-  
-  <!-- Arms Pumping for Speed -->
-  <path d="M39 26 L47 31 L52 28" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-  <path d="M35 28 L27 33 L22 30" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <!-- Delicate Inner Leaf Vein Line -->
+  <path d="M 27 66 C 26 48, 35 38, 47 34" 
+        stroke="#1b5e20" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.6" />
 
-  <!-- Speed Particles / Spurt in Vitality Orange -->
-  <circle cx="16" cy="32" r="2.2" fill="url(#orange-spark)" />
-  <circle cx="12" cy="36" r="1.6" fill="url(#orange-spark)" />
-  <circle cx="18" cy="24" r="1.4" fill="#a5d6a7" />
+  <!-- Right Upright Athletic Spine & Grounding Stem of 'গ' -->
+  <path d="M 64 34 L 64 68 C 64 71.5, 61 74, 57.5 74 C 54 74, 51 71.5, 51 68 L 51 47" 
+        stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+  <!-- Dynamic Connecting Matra / Forward Momentum Arch -->
+  <path d="M 40 33 Q 54 28, 68 31" 
+        stroke="#ffffff" stroke-width="5" stroke-linecap="round" fill="none" />
+
+  <!-- Golden Sun of Vitality / Athletic Head at the Crown -->
+  <circle cx="64" cy="22" r="6.5" fill="url(#sun-glow)" />
+  
+  <!-- Micro Speed / Energy Particle Sparks -->
+  <circle cx="76" cy="27" r="2.5" fill="#ffe082" />
+  <circle cx="80" cy="36" r="1.8" fill="#ffb74d" />
 </svg>
-
