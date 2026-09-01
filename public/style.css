@@ -328,6 +328,14 @@ button, input, select, textarea {
   line-height: 1.1;
 }
 
+.brand-name.font-bengali {
+  font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+
 .brand-sub {
   font-size: 0.7rem;
   font-weight: 600;
