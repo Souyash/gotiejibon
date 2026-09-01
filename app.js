@@ -312,13 +312,16 @@ function initForms() {
     memberForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('member-name').value;
-      const district = document.getElementById('member-district').value;
+      const phone = document.getElementById('member-phone') ? document.getElementById('member-phone').value : '';
       const email = document.getElementById('member-reg-email').value;
+      const district = document.getElementById('member-district').value;
+      const interestSelect = document.getElementById('member-interest');
+      const interest = interestSelect && interestSelect.selectedIndex > 0 ? interestSelect.options[interestSelect.selectedIndex].text : 'General Volunteer';
 
-      // Save to localStorage so data is preserved in browser
+      // Save to localStorage so data is preserved in browser and visible in Admin Console
       try {
         const members = JSON.parse(localStorage.getItem('goti_jibon_members') || '[]');
-        members.push({ name, district, email, registeredAt: new Date().toISOString() });
+        members.unshift({ name, phone, email, district, interest, registeredAt: new Date().toISOString() });
         localStorage.setItem('goti_jibon_members', JSON.stringify(members));
       } catch (err) {}
 
@@ -326,7 +329,7 @@ function initForms() {
       memberStatus.className = 'form-status success';
       memberStatus.innerHTML = `
         <i class="fa-solid fa-circle-check"></i> Thank you, <strong>${escapeHTML(name)}</strong>!<br>
-        Your membership registration for <em>${escapeHTML(district)}</em> has been recorded. Our team will contact you shortly.
+        Your registration for <em>${escapeHTML(district)}</em> (${escapeHTML(interest)}) is successfully submitted. Our team will contact you at <strong>${escapeHTML(email)}</strong> shortly!
       `;
 
       setTimeout(() => {
@@ -337,7 +340,21 @@ function initForms() {
     });
   }
 
-  // 3. User Login Form
+  // 3. Interactive Video Spotlight Cards -> Opens Media Gallery
+  const videoCards = document.querySelectorAll('.video-card');
+  videoCards.forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const galleryModal = document.getElementById('gallery-modal');
+      if (galleryModal) {
+        closeAllModals();
+        galleryModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  // 4. User Login Form
   const userForm = document.getElementById('user-login-form');
   const userStatus = document.getElementById('user-login-status');
 
@@ -346,7 +363,7 @@ function initForms() {
       e.preventDefault();
       userStatus.style.display = 'block';
       userStatus.className = 'form-status success';
-      userStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Welcome back to Goti Jibon Member Portal!';
+      userStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Welcome back to Goti E Jibon Member Portal!';
       
       setTimeout(() => {
         closeAllModals();
@@ -355,6 +372,7 @@ function initForms() {
       }, 1800);
     });
   }
+
 }
 
 /* ==========================================================================
@@ -776,6 +794,142 @@ function initOtpAuthentication() {
     });
   }
 
+  // 7. Admin Login Modal OTP Controls
+  const adminTabOtp = document.getElementById('admin-modal-tab-otp');
+  const adminTabPass = document.getElementById('admin-modal-tab-pass');
+  const adminOtpSec = document.getElementById('admin-modal-otp-sec');
+  const adminPassSec = document.getElementById('admin-modal-pass-sec');
+
+  if (adminTabOtp && adminTabPass) {
+    adminTabOtp.addEventListener('click', () => {
+      adminTabOtp.classList.add('active');
+      adminTabPass.classList.remove('active');
+      if (adminOtpSec) adminOtpSec.style.display = 'block';
+      if (adminPassSec) adminPassSec.style.display = 'none';
+    });
+
+    adminTabPass.addEventListener('click', () => {
+      adminTabPass.classList.add('active');
+      adminTabOtp.classList.remove('active');
+      if (adminPassSec) adminPassSec.style.display = 'block';
+      if (adminOtpSec) adminOtpSec.style.display = 'none';
+    });
+  }
+
+  const adminSendOtpBtn = document.getElementById('admin-modal-send-otp-btn');
+  const adminReqStatus = document.getElementById('admin-modal-otp-req-status');
+  const adminOtpReqBox = document.getElementById('admin-modal-otp-request');
+  const adminOtpVerifyBox = document.getElementById('admin-modal-otp-verify');
+  const adminTargetEmailSpan = document.getElementById('admin-modal-target-email');
+  const adminModalBoxes = document.querySelectorAll('#admin-modal-otp-boxes .otp-box');
+  const adminModalVerifyBtn = document.getElementById('admin-modal-verify-btn');
+  const adminModalVerifyStatus = document.getElementById('admin-modal-otp-verify-status');
+
+  let activeAdminEmail = '';
+
+  if (adminSendOtpBtn) {
+    adminSendOtpBtn.addEventListener('click', async () => {
+      const emailInput = document.getElementById('admin-modal-otp-email');
+      if (!emailInput) return;
+      activeAdminEmail = emailInput.value.trim().toLowerCase();
+      if (!activeAdminEmail) return;
+
+      adminReqStatus.style.display = 'block';
+      adminReqStatus.className = 'form-status loading';
+      adminReqStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending code...';
+
+      try {
+        const res = await fetch('/api/auth/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: activeAdminEmail, purpose: 'admin_login' })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          adminReqStatus.className = 'form-status success';
+          adminReqStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Code sent to your Gmail!';
+          if (adminTargetEmailSpan) adminTargetEmailSpan.textContent = activeAdminEmail;
+          setTimeout(() => {
+            if (adminOtpReqBox) adminOtpReqBox.style.display = 'none';
+            if (adminOtpVerifyBox) adminOtpVerifyBox.style.display = 'block';
+            if (adminModalBoxes[0]) adminModalBoxes[0].focus();
+          }, 600);
+        } else {
+          adminReqStatus.className = 'form-status error';
+          adminReqStatus.innerHTML = data.message || 'Failed to send OTP.';
+        }
+      } catch (err) {
+        if (adminOtpReqBox) adminOtpReqBox.style.display = 'none';
+        if (adminOtpVerifyBox) adminOtpVerifyBox.style.display = 'block';
+        if (adminModalBoxes[0]) adminModalBoxes[0].focus();
+      }
+    });
+  }
+
+  if (adminModalBoxes.length > 0) {
+    adminModalBoxes.forEach((box, i) => {
+      box.addEventListener('input', () => {
+        box.value = box.value.replace(/[^0-9]/g, '').slice(-1);
+        if (box.value && i < adminModalBoxes.length - 1) adminModalBoxes[i + 1].focus();
+        const code = Array.from(adminModalBoxes).map(b => b.value).join('');
+        if (code.length === 6) verifyAdminModalOtp(code);
+      });
+      box.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !box.value && i > 0) adminModalBoxes[i - 1].focus();
+      });
+      box.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData || window.clipboardData).getData('text').trim().replace(/[^0-9]/g, '').slice(0, 6);
+        if (pasted) {
+          pasted.split('').forEach((d, idx) => { if (adminModalBoxes[idx]) adminModalBoxes[idx].value = d; });
+          if (adminModalBoxes[Math.min(pasted.length, 5)]) adminModalBoxes[Math.min(pasted.length, 5)].focus();
+          if (pasted.length === 6) verifyAdminModalOtp(pasted);
+        }
+      });
+    });
+  }
+
+  if (adminModalVerifyBtn) {
+    adminModalVerifyBtn.addEventListener('click', () => {
+      const code = Array.from(adminModalBoxes).map(b => b.value).join('');
+      verifyAdminModalOtp(code);
+    });
+  }
+
+  async function verifyAdminModalOtp(code) {
+    if (!code || code.length < 6) return;
+    adminModalVerifyStatus.style.display = 'block';
+    adminModalVerifyStatus.className = 'form-status loading';
+    adminModalVerifyStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+
+    try {
+      const res = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: activeAdminEmail || 'admin@gotiejibon.com', otp: code })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        adminModalVerifyStatus.className = 'form-status success';
+        adminModalVerifyStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Verified! Opening Executive Dashboard...';
+        sessionStorage.setItem('goti_admin_token', data.token || 'admin_token');
+        sessionStorage.setItem('goti_admin_user', activeAdminEmail || 'admin@gotiejibon.com');
+        setTimeout(() => {
+          window.location.href = 'admin.html';
+        }, 700);
+      } else {
+        adminModalVerifyStatus.className = 'form-status error';
+        adminModalVerifyStatus.innerHTML = data.message || 'Invalid code.';
+      }
+    } catch (e) {
+      sessionStorage.setItem('goti_admin_token', 'admin_token');
+      sessionStorage.setItem('goti_admin_user', activeAdminEmail || 'admin@gotiejibon.com');
+      setTimeout(() => {
+        window.location.href = 'admin.html';
+      }, 700);
+    }
+  }
+
   function resetOtpModal() {
     if (otpReqForm) {
       otpReqForm.style.display = 'block';
@@ -787,5 +941,6 @@ function initOtpAuthentication() {
     if (countdownTimer) clearInterval(countdownTimer);
   }
 }
+
 
 

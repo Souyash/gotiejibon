@@ -726,25 +726,72 @@
           <h3 id="admin-modal-title">Admin Portal Login</h3>
           <p>Access the Goti Jibon executive management console</p>
         </div>
-        
-        <form id="admin-login-form" class="modal-form">
-          <div class="form-group">
-            <label for="admin-email"><i class="fa-solid fa-envelope"></i> Admin ID or Email</label>
-            <input type="text" id="admin-email" name="email" required placeholder="admin@gotiejibon.com" autocomplete="username" />
-          </div>
-          
-          <div class="form-group">
-            <label for="admin-password"><i class="fa-solid fa-key"></i> Password</label>
-            <input type="password" id="admin-password" name="password" required placeholder="••••••••" autocomplete="current-password" />
-          </div>
 
-          <div id="admin-login-status" class="form-status" style="display: none;"></div>
-
-          <button type="submit" class="btn btn-primary btn-block" id="admin-submit-btn">
-            <i class="fa-solid fa-right-to-bracket"></i> Login as Administrator
+        <!-- Auth Method Selector Tabs -->
+        <div class="auth-mode-toggle">
+          <button type="button" class="auth-mode-btn active" id="admin-modal-tab-otp">
+            <i class="fa-solid fa-envelope-circle-check"></i> Gmail OTP
           </button>
-        </form>
+          <button type="button" class="auth-mode-btn" id="admin-modal-tab-pass">
+            <i class="fa-solid fa-key"></i> Password
+          </button>
+        </div>
+
+        <!-- Admin OTP Section -->
+        <div id="admin-modal-otp-sec">
+          <div id="admin-modal-otp-request">
+            <div class="form-group">
+              <label for="admin-modal-otp-email"><i class="fa-solid fa-envelope"></i> Admin Gmail Address</label>
+              <input type="email" id="admin-modal-otp-email" value="admin@gotiejibon.com" required placeholder="admin@gotiejibon.com" />
+            </div>
+            <div id="admin-modal-otp-req-status" class="form-status" style="display: none; margin-bottom: 0.75rem;"></div>
+            <button type="button" class="btn btn-primary btn-block" id="admin-modal-send-otp-btn">
+              <i class="fa-solid fa-paper-plane"></i> Send Admin OTP Code
+            </button>
+          </div>
+
+          <div id="admin-modal-otp-verify" class="otp-auth-card" style="display: none;">
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              Enter 6-digit code sent to <strong id="admin-modal-target-email" style="color: var(--forest-green);">admin@gotiejibon.com</strong>
+            </p>
+            <div class="otp-inputs-grid" id="admin-modal-otp-boxes">
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" />
+              <input type="text" maxlength="1" class="otp-box" inputmode="numeric" />
+            </div>
+            <div id="admin-modal-otp-verify-status" class="form-status" style="display: none; margin-bottom: 0.75rem;"></div>
+            <button type="button" class="btn btn-primary btn-block" id="admin-modal-verify-btn">
+              <i class="fa-solid fa-circle-check"></i> Verify & Open Console
+            </button>
+          </div>
+        </div>
+        
+        <!-- Admin Password Section -->
+        <div id="admin-modal-pass-sec" style="display: none;">
+          <form id="admin-login-form" class="modal-form">
+            <div class="form-group">
+              <label for="admin-email"><i class="fa-solid fa-envelope"></i> Admin ID or Email</label>
+              <input type="text" id="admin-email" name="email" required placeholder="admin@gotiejibon.com" autocomplete="username" />
+            </div>
+            
+            <div class="form-group">
+              <label for="admin-password"><i class="fa-solid fa-key"></i> Password</label>
+              <input type="password" id="admin-password" name="password" required placeholder="••••••••" autocomplete="current-password" />
+            </div>
+
+            <div id="admin-login-status" class="form-status" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="admin-submit-btn">
+              <i class="fa-solid fa-right-to-bracket"></i> Login as Administrator
+            </button>
+          </form>
+        </div>
+
       </div>
+
 
       <!-- Logged-in Admin Dashboard View -->
       <div id="admin-dashboard-view" style="display: none;">
