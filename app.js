@@ -52,6 +52,7 @@ async function fetchAndRenderArticles() {
   // Show skeleton loading state briefly for smooth UX
   renderSkeletonLoader(container);
 
+  let serverArticles = [];
   try {
     const response = await fetch('/api/articles', {
       method: 'GET',
@@ -62,23 +63,33 @@ async function fetchAndRenderArticles() {
 
     if (response.ok) {
       const result = await response.json();
-      const articles = (result && result.data && result.data.length > 0) 
-        ? result.data 
-        : DEFAULT_ARTICLES;
-
-      container.innerHTML = articles.map(article => createArticleCardHTML(article)).join('');
-      return;
+      if (result && result.data && result.data.length > 0) {
+        serverArticles = result.data;
+      }
     }
-  } catch (error) {
-    // Quietly catch static hosting or offline states
-    console.info('Operating in client-resilient mode with pre-cached dispatches.');
+  } catch (error) {}
+
+  // Read any newly published articles from localStorage
+  let localArticles = [];
+  try {
+    localArticles = JSON.parse(localStorage.getItem('goti_jibon_custom_articles') || '[]');
+  } catch (e) {}
+
+  // Combine and deduplicate by title
+  const allArticles = [...localArticles, ...serverArticles, ...DEFAULT_ARTICLES];
+  const seen = new Set();
+  const uniqueArticles = [];
+  for (const art of allArticles) {
+    const key = (art.title || '').trim().toLowerCase();
+    if (key && !seen.has(key)) {
+      seen.add(key);
+      uniqueArticles.push(art);
+    }
   }
 
-  // Gracefully render default rich articles if on static host / backend offline
-  setTimeout(() => {
-    container.innerHTML = DEFAULT_ARTICLES.map(article => createArticleCardHTML(article)).join('');
-  }, 300);
+  container.innerHTML = uniqueArticles.map(article => createArticleCardHTML(article)).join('');
 }
+
 
 /**
  * Generates semantic HTML markup for an article card

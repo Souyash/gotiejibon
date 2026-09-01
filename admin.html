@@ -411,12 +411,29 @@
           const title = document.getElementById('page-art-title').value.trim();
           const category = document.getElementById('page-art-category').value;
           const content = document.getElementById('page-art-content').value.trim();
-          const author = document.getElementById('page-art-author').value.trim();
-          const readTime = document.getElementById('page-art-readtime').value.trim();
+          const author = document.getElementById('page-art-author').value.trim() || 'Goti E Jibon Directorate';
+          const readTime = document.getElementById('page-art-readtime').value.trim() || '3 min read';
 
           status.style.display = 'block';
           status.className = 'form-status loading';
           status.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing to live server...';
+
+          // Save immediately to persistent custom articles store
+          const customItem = {
+            _id: 'art-' + Date.now(),
+            title,
+            category,
+            content,
+            author,
+            readTime,
+            date: new Date().toISOString()
+          };
+
+          try {
+            const existing = JSON.parse(localStorage.getItem('goti_jibon_custom_articles') || '[]');
+            existing.unshift(customItem);
+            localStorage.setItem('goti_jibon_custom_articles', JSON.stringify(existing));
+          } catch (e) {}
 
           try {
             const res = await fetch('/api/articles', {
@@ -435,12 +452,13 @@
           } catch (err) {}
 
           status.className = 'form-status success';
-          status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Published! Dispatches are live.';
+          status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Published! Dispatches are live on the homepage.';
           form.reset();
           if (statArticles) statArticles.textContent = Number(statArticles.textContent || 3) + 1;
         });
       }
     }
+
 
     function escapeHTML(str) {
       if (!str) return '';

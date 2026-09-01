@@ -88,7 +88,7 @@ app.get('/api/articles', async (req, res) => {
     if (isMongoConnected && mongoose.connection.readyState === 1) {
       const articles = await Article.find()
         .sort({ date: -1 })
-        .limit(3)
+        .limit(20)
         .lean();
 
       if (articles && articles.length > 0) {
@@ -100,6 +100,7 @@ app.get('/api/articles', async (req, res) => {
         });
       }
     }
+
 
     // Fallback if DB is empty or disconnected
     return res.status(200).json({
