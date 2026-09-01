@@ -13,4 +13,3 @@ Disallow: /admin.html
 
 # Sitemap index location
 Sitemap: https://gotiejibon.com/sitemap.xml
-

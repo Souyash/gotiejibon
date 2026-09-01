@@ -40,9 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initArticlesFeed();
   initModals();
   initForms();
-  initOtpAuthentication();
 });
-
 
 /* ==========================================================================
    1. Dynamic Articles Feed (GET /api/articles or Fallback)
@@ -312,16 +310,13 @@ function initForms() {
     memberForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('member-name').value;
-      const phone = document.getElementById('member-phone') ? document.getElementById('member-phone').value : '';
-      const email = document.getElementById('member-reg-email').value;
       const district = document.getElementById('member-district').value;
-      const interestSelect = document.getElementById('member-interest');
-      const interest = interestSelect && interestSelect.selectedIndex > 0 ? interestSelect.options[interestSelect.selectedIndex].text : 'General Volunteer';
+      const email = document.getElementById('member-reg-email').value;
 
-      // Save to localStorage so data is preserved in browser and visible in Admin Console
+      // Save to localStorage so data is preserved in browser
       try {
         const members = JSON.parse(localStorage.getItem('goti_jibon_members') || '[]');
-        members.unshift({ name, phone, email, district, interest, registeredAt: new Date().toISOString() });
+        members.push({ name, district, email, registeredAt: new Date().toISOString() });
         localStorage.setItem('goti_jibon_members', JSON.stringify(members));
       } catch (err) {}
 
@@ -329,7 +324,7 @@ function initForms() {
       memberStatus.className = 'form-status success';
       memberStatus.innerHTML = `
         <i class="fa-solid fa-circle-check"></i> Thank you, <strong>${escapeHTML(name)}</strong>!<br>
-        Your registration for <em>${escapeHTML(district)}</em> (${escapeHTML(interest)}) is successfully submitted. Our team will contact you at <strong>${escapeHTML(email)}</strong> shortly!
+        Your membership registration for <em>${escapeHTML(district)}</em> has been recorded. Our team will contact you shortly.
       `;
 
       setTimeout(() => {
@@ -340,21 +335,7 @@ function initForms() {
     });
   }
 
-  // 3. Interactive Video Spotlight Cards -> Opens Media Gallery
-  const videoCards = document.querySelectorAll('.video-card');
-  videoCards.forEach(card => {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => {
-      const galleryModal = document.getElementById('gallery-modal');
-      if (galleryModal) {
-        closeAllModals();
-        galleryModal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
-    });
-  });
-
-  // 4. User Login Form
+  // 3. User Login Form
   const userForm = document.getElementById('user-login-form');
   const userStatus = document.getElementById('user-login-status');
 
@@ -363,7 +344,7 @@ function initForms() {
       e.preventDefault();
       userStatus.style.display = 'block';
       userStatus.className = 'form-status success';
-      userStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Welcome back to Goti E Jibon Member Portal!';
+      userStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Welcome back to Goti Jibon Member Portal!';
       
       setTimeout(() => {
         closeAllModals();
@@ -372,7 +353,6 @@ function initForms() {
       }, 1800);
     });
   }
-
 }
 
 /* ==========================================================================
@@ -524,423 +504,15 @@ function loadRegisteredMembers() {
 }
 
 /* ==========================================================================
-   7. Gmail OTP Authenticator Controller
+   6. Helper Utilities
    ========================================================================== */
-function initOtpAuthentication() {
-  const tabOtp = document.getElementById('tab-otp-mode');
-  const tabPass = document.getElementById('tab-pass-mode');
-  const otpSection = document.getElementById('otp-auth-section');
-  const passSection = document.getElementById('password-auth-section');
-
-  const otpReqForm = document.getElementById('otp-request-form');
-  const otpReqStatus = document.getElementById('otp-request-status');
-  const sendOtpBtn = document.getElementById('send-otp-btn');
-
-  const otpVerifyCard = document.getElementById('otp-verify-card');
-  const otpVerifyStatus = document.getElementById('otp-verify-status');
-  const verifyOtpBtn = document.getElementById('verify-otp-btn');
-  const resendOtpBtn = document.getElementById('resend-otp-btn');
-  const countdownSpan = document.getElementById('otp-countdown');
-  const otpTargetSpan = document.getElementById('otp-sent-target');
-
-  const otpBoxes = document.querySelectorAll('#otp-boxes-group .otp-box');
-
-  let activeEmail = '';
-  let countdownTimer = null;
-
-  // 1. Tab Switching (OTP vs Password)
-  if (tabOtp && tabPass) {
-    tabOtp.addEventListener('click', () => {
-      tabOtp.classList.add('active');
-      tabPass.classList.remove('active');
-      if (otpSection) otpSection.style.display = 'block';
-      if (passSection) passSection.style.display = 'none';
-    });
-
-    tabPass.addEventListener('click', () => {
-      tabPass.classList.add('active');
-      tabOtp.classList.remove('active');
-      if (passSection) passSection.style.display = 'block';
-      if (otpSection) otpSection.style.display = 'none';
-    });
-  }
-
-  // 2. Request OTP Submission
-  if (otpReqForm) {
-    otpReqForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const emailInput = document.getElementById('otp-email');
-      if (!emailInput) return;
-
-      activeEmail = emailInput.value.trim().toLowerCase();
-      if (!activeEmail) return;
-
-      otpReqStatus.style.display = 'block';
-      otpReqStatus.className = 'form-status loading';
-      otpReqStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating & sending verification code...';
-      if (sendOtpBtn) sendOtpBtn.disabled = true;
-
-      try {
-        const res = await fetch('/api/auth/send-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: activeEmail, purpose: 'login' })
-        });
-
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-          otpReqStatus.className = 'form-status success';
-          otpReqStatus.innerHTML = `<i class="fa-solid fa-envelope-circle-check"></i> ${data.message || 'OTP Code sent successfully!'}`;
-
-          if (otpTargetSpan) otpTargetSpan.textContent = activeEmail;
-
-          // If in demo mode with demoOtp, auto-fill for frictionless testing
-          if (data.demoOtp) {
-            console.log(`🔑 Demo OTP received: ${data.demoOtp}`);
-          }
-
-          setTimeout(() => {
-            otpReqForm.style.display = 'none';
-            otpReqStatus.style.display = 'none';
-            if (otpVerifyCard) otpVerifyCard.style.display = 'block';
-            if (otpBoxes[0]) otpBoxes[0].focus();
-            startResendCountdown(60);
-          }, 800);
-        } else {
-          otpReqStatus.className = 'form-status error';
-          otpReqStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${data.message || 'Failed to send OTP.'}`;
-        }
-      } catch (err) {
-        // Fallback for offline / static hosting demo
-        const fakeOtp = Math.floor(100000 + Math.random() * 900000).toString();
-        sessionStorage.setItem('demo_last_otp', fakeOtp);
-        
-        otpReqStatus.className = 'form-status success';
-        otpReqStatus.innerHTML = `<i class="fa-solid fa-envelope-circle-check"></i> Demo OTP Generated: <strong>${fakeOtp}</strong>`;
-
-        if (otpTargetSpan) otpTargetSpan.textContent = activeEmail;
-
-        setTimeout(() => {
-          otpReqForm.style.display = 'none';
-          otpReqStatus.style.display = 'none';
-          if (otpVerifyCard) otpVerifyCard.style.display = 'block';
-          if (otpBoxes[0]) otpBoxes[0].focus();
-          startResendCountdown(60);
-        }, 1200);
-      } finally {
-        if (sendOtpBtn) sendOtpBtn.disabled = false;
-      }
-    });
-  }
-
-  // 3. 6-Box Input Interactions (Auto-Advance, Backspace, Paste)
-  if (otpBoxes.length > 0) {
-    otpBoxes.forEach((box, index) => {
-      // Handle Typing
-      box.addEventListener('input', (e) => {
-        const val = box.value.replace(/[^0-9]/g, '');
-        box.value = val ? val.slice(-1) : '';
-
-        if (box.value && index < otpBoxes.length - 1) {
-          otpBoxes[index + 1].focus();
-        }
-
-        checkAutoSubmit();
-      });
-
-      // Handle Backspace
-      box.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !box.value && index > 0) {
-          otpBoxes[index - 1].focus();
-        }
-      });
-
-      // Handle Paste
-      box.addEventListener('paste', (e) => {
-        e.preventDefault();
-        const pastedData = (e.clipboardData || window.clipboardData).getData('text').trim();
-        const digits = pastedData.replace(/[^0-9]/g, '').slice(0, 6);
-
-        if (digits) {
-          digits.split('').forEach((d, i) => {
-            if (otpBoxes[i]) otpBoxes[i].value = d;
-          });
-
-          const nextIndex = Math.min(digits.length, otpBoxes.length - 1);
-          if (otpBoxes[nextIndex]) otpBoxes[nextIndex].focus();
-
-          checkAutoSubmit();
-        }
-      });
-    });
-  }
-
-  function checkAutoSubmit() {
-    const fullOtp = getEnteredOtp();
-    if (fullOtp.length === 6) {
-      handleVerifyOtp();
-    }
-  }
-
-  function getEnteredOtp() {
-    return Array.from(otpBoxes).map(b => b.value).join('');
-  }
-
-  // 4. Verify OTP Button Trigger
-  if (verifyOtpBtn) {
-    verifyOtpBtn.addEventListener('click', handleVerifyOtp);
-  }
-
-  async function handleVerifyOtp() {
-    const enteredOtp = getEnteredOtp();
-    if (enteredOtp.length < 6) {
-      if (otpVerifyStatus) {
-        otpVerifyStatus.style.display = 'block';
-        otpVerifyStatus.className = 'form-status error';
-        otpVerifyStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Please enter all 6 digits of the code.';
-      }
-      return;
-    }
-
-    if (otpVerifyStatus) {
-      otpVerifyStatus.style.display = 'block';
-      otpVerifyStatus.className = 'form-status loading';
-      otpVerifyStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying security code...';
-    }
-
-    try {
-      const res = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: activeEmail, otp: enteredOtp })
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        otpVerifyStatus.className = 'form-status success';
-        otpVerifyStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Verified! ${data.isAdmin ? 'Redirecting to Admin Console...' : 'Welcome back!'}`;
-
-        sessionStorage.setItem('goti_auth_token', data.token || 'verified_token');
-        sessionStorage.setItem('goti_user_email', activeEmail);
-
-        if (data.isAdmin) {
-          sessionStorage.setItem('goti_admin_token', data.token || 'admin_token');
-          sessionStorage.setItem('goti_admin_user', activeEmail);
-          setTimeout(() => {
-            window.location.href = 'admin.html';
-          }, 800);
-          return;
-        }
-
-        setTimeout(() => {
-          closeAllModals();
-          resetOtpModal();
-        }, 1500);
-      } else {
-        otpVerifyStatus.className = 'form-status error';
-        otpVerifyStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${data.message || 'Invalid or expired OTP.'}`;
-      }
-    } catch (err) {
-      // Fallback verification for demo
-      const demoExpected = sessionStorage.getItem('demo_last_otp');
-      if (demoExpected && enteredOtp === demoExpected) {
-        otpVerifyStatus.className = 'form-status success';
-        otpVerifyStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Verified! Welcome back!`;
-        sessionStorage.setItem('goti_auth_token', 'demo_verified');
-        setTimeout(() => {
-          closeAllModals();
-          resetOtpModal();
-        }, 1500);
-      } else {
-        otpVerifyStatus.className = 'form-status error';
-        otpVerifyStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Invalid verification code.`;
-      }
-    }
-  }
-
-  // 5. Resend Countdown Timer
-  function startResendCountdown(seconds) {
-    let remaining = seconds;
-    if (resendOtpBtn) resendOtpBtn.disabled = true;
-    if (countdownSpan) countdownSpan.textContent = remaining;
-
-    if (countdownTimer) clearInterval(countdownTimer);
-
-    countdownTimer = setInterval(() => {
-      remaining--;
-      if (countdownSpan) countdownSpan.textContent = remaining;
-
-      if (remaining <= 0) {
-        clearInterval(countdownTimer);
-        if (resendOtpBtn) {
-          resendOtpBtn.disabled = false;
-          resendOtpBtn.textContent = 'Resend Code Now';
-        }
-      }
-    }, 1000);
-  }
-
-  // 6. Resend Click Handler
-  if (resendOtpBtn) {
-    resendOtpBtn.addEventListener('click', () => {
-      if (otpReqForm) {
-        otpReqForm.style.display = 'block';
-        if (otpVerifyCard) otpVerifyCard.style.display = 'none';
-        const submitEvent = new Event('submit', { cancelable: true, bubbles: true });
-        otpReqForm.dispatchEvent(submitEvent);
-      }
-    });
-  }
-
-  // 7. Admin Login Modal OTP Controls
-  const adminTabOtp = document.getElementById('admin-modal-tab-otp');
-  const adminTabPass = document.getElementById('admin-modal-tab-pass');
-  const adminOtpSec = document.getElementById('admin-modal-otp-sec');
-  const adminPassSec = document.getElementById('admin-modal-pass-sec');
-
-  if (adminTabOtp && adminTabPass) {
-    adminTabOtp.addEventListener('click', () => {
-      adminTabOtp.classList.add('active');
-      adminTabPass.classList.remove('active');
-      if (adminOtpSec) adminOtpSec.style.display = 'block';
-      if (adminPassSec) adminPassSec.style.display = 'none';
-    });
-
-    adminTabPass.addEventListener('click', () => {
-      adminTabPass.classList.add('active');
-      adminTabOtp.classList.remove('active');
-      if (adminPassSec) adminPassSec.style.display = 'block';
-      if (adminOtpSec) adminOtpSec.style.display = 'none';
-    });
-  }
-
-  const adminSendOtpBtn = document.getElementById('admin-modal-send-otp-btn');
-  const adminReqStatus = document.getElementById('admin-modal-otp-req-status');
-  const adminOtpReqBox = document.getElementById('admin-modal-otp-request');
-  const adminOtpVerifyBox = document.getElementById('admin-modal-otp-verify');
-  const adminTargetEmailSpan = document.getElementById('admin-modal-target-email');
-  const adminModalBoxes = document.querySelectorAll('#admin-modal-otp-boxes .otp-box');
-  const adminModalVerifyBtn = document.getElementById('admin-modal-verify-btn');
-  const adminModalVerifyStatus = document.getElementById('admin-modal-otp-verify-status');
-
-  let activeAdminEmail = '';
-
-  if (adminSendOtpBtn) {
-    adminSendOtpBtn.addEventListener('click', async () => {
-      const emailInput = document.getElementById('admin-modal-otp-email');
-      if (!emailInput) return;
-      activeAdminEmail = emailInput.value.trim().toLowerCase();
-      if (!activeAdminEmail) return;
-
-      adminReqStatus.style.display = 'block';
-      adminReqStatus.className = 'form-status loading';
-      adminReqStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending code...';
-
-      try {
-        const res = await fetch('/api/auth/send-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: activeAdminEmail, purpose: 'admin_login' })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          adminReqStatus.className = 'form-status success';
-          adminReqStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Code sent to your Gmail!';
-          if (adminTargetEmailSpan) adminTargetEmailSpan.textContent = activeAdminEmail;
-          setTimeout(() => {
-            if (adminOtpReqBox) adminOtpReqBox.style.display = 'none';
-            if (adminOtpVerifyBox) adminOtpVerifyBox.style.display = 'block';
-            if (adminModalBoxes[0]) adminModalBoxes[0].focus();
-          }, 600);
-        } else {
-          adminReqStatus.className = 'form-status error';
-          adminReqStatus.innerHTML = data.message || 'Failed to send OTP.';
-        }
-      } catch (err) {
-        if (adminOtpReqBox) adminOtpReqBox.style.display = 'none';
-        if (adminOtpVerifyBox) adminOtpVerifyBox.style.display = 'block';
-        if (adminModalBoxes[0]) adminModalBoxes[0].focus();
-      }
-    });
-  }
-
-  if (adminModalBoxes.length > 0) {
-    adminModalBoxes.forEach((box, i) => {
-      box.addEventListener('input', () => {
-        box.value = box.value.replace(/[^0-9]/g, '').slice(-1);
-        if (box.value && i < adminModalBoxes.length - 1) adminModalBoxes[i + 1].focus();
-        const code = Array.from(adminModalBoxes).map(b => b.value).join('');
-        if (code.length === 6) verifyAdminModalOtp(code);
-      });
-      box.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !box.value && i > 0) adminModalBoxes[i - 1].focus();
-      });
-      box.addEventListener('paste', (e) => {
-        e.preventDefault();
-        const pasted = (e.clipboardData || window.clipboardData).getData('text').trim().replace(/[^0-9]/g, '').slice(0, 6);
-        if (pasted) {
-          pasted.split('').forEach((d, idx) => { if (adminModalBoxes[idx]) adminModalBoxes[idx].value = d; });
-          if (adminModalBoxes[Math.min(pasted.length, 5)]) adminModalBoxes[Math.min(pasted.length, 5)].focus();
-          if (pasted.length === 6) verifyAdminModalOtp(pasted);
-        }
-      });
-    });
-  }
-
-  if (adminModalVerifyBtn) {
-    adminModalVerifyBtn.addEventListener('click', () => {
-      const code = Array.from(adminModalBoxes).map(b => b.value).join('');
-      verifyAdminModalOtp(code);
-    });
-  }
-
-  async function verifyAdminModalOtp(code) {
-    if (!code || code.length < 6) return;
-    adminModalVerifyStatus.style.display = 'block';
-    adminModalVerifyStatus.className = 'form-status loading';
-    adminModalVerifyStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
-
-    try {
-      const res = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: activeAdminEmail || 'admin@gotiejibon.com', otp: code })
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        adminModalVerifyStatus.className = 'form-status success';
-        adminModalVerifyStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Verified! Opening Executive Dashboard...';
-        sessionStorage.setItem('goti_admin_token', data.token || 'admin_token');
-        sessionStorage.setItem('goti_admin_user', activeAdminEmail || 'admin@gotiejibon.com');
-        setTimeout(() => {
-          window.location.href = 'admin.html';
-        }, 700);
-      } else {
-        adminModalVerifyStatus.className = 'form-status error';
-        adminModalVerifyStatus.innerHTML = data.message || 'Invalid code.';
-      }
-    } catch (e) {
-      sessionStorage.setItem('goti_admin_token', 'admin_token');
-      sessionStorage.setItem('goti_admin_user', activeAdminEmail || 'admin@gotiejibon.com');
-      setTimeout(() => {
-        window.location.href = 'admin.html';
-      }, 700);
-    }
-  }
-
-  function resetOtpModal() {
-    if (otpReqForm) {
-      otpReqForm.style.display = 'block';
-      otpReqForm.reset();
-    }
-    if (otpVerifyCard) otpVerifyCard.style.display = 'none';
-    if (otpVerifyStatus) otpVerifyStatus.style.display = 'none';
-    otpBoxes.forEach(b => b.value = '');
-    if (countdownTimer) clearInterval(countdownTimer);
-  }
+function escapeHTML(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
-
-
 

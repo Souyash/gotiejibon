@@ -209,96 +209,43 @@
 
   </main>
 
-  <!-- Authentication Overlay (Visible if not logged in) -->
-  <div id="admin-auth-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 30, 15, 0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 1.25rem;">
-    <div style="background: #ffffff; width: 100%; max-width: 440px; border-radius: 16px; padding: 2rem; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border-top: 5px solid #1b5e20;">
+  <!-- Direct In-Page Admin Login Overlay -->
+  <div id="admin-login-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 30, 15, 0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 1.25rem;">
+    <div style="background: #ffffff; width: 100%; max-width: 420px; border-radius: 16px; padding: 2.25rem 2rem; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border-top: 5px solid #1b5e20;">
       
       <div style="text-align: center; margin-bottom: 1.5rem;">
         <div style="width: 56px; height: 56px; margin: 0 auto 0.75rem; background: linear-gradient(135deg, #1b5e20, #4caf50); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 12px rgba(27,94,32,0.3);">
           <i class="fa-solid fa-shield-halved"></i>
         </div>
-        <h3 style="margin: 0; color: #1b5e20; font-size: 1.4rem;">Executive Admin Access</h3>
-        <p style="margin: 0.25rem 0 0; font-size: 0.88rem; color: #666;">Verify via Gmail OTP or Admin Password</p>
+        <h3 style="margin: 0; color: #1b5e20; font-size: 1.35rem;">Admin Dashboard Login</h3>
+        <p style="margin: 0.25rem 0 0; font-size: 0.88rem; color: #666;">Enter your credentials to manage Goti E Jibon</p>
       </div>
 
-      <!-- Auth Method Selector -->
-      <div style="display: flex; background: #f1f8e9; border-radius: 30px; padding: 3px; margin-bottom: 1.5rem; border: 1px solid #c8e6c9;">
-        <button type="button" id="admin-tab-otp" style="flex: 1; padding: 0.5rem; border: none; border-radius: 30px; font-weight: 700; font-size: 0.85rem; cursor: pointer; background: #1b5e20; color: #fff; transition: all 0.2s;">
-          <i class="fa-solid fa-envelope-circle-check"></i> Gmail OTP
-        </button>
-        <button type="button" id="admin-tab-pass" style="flex: 1; padding: 0.5rem; border: none; border-radius: 30px; font-weight: 600; font-size: 0.85rem; cursor: pointer; background: transparent; color: #666; transition: all 0.2s;">
-          <i class="fa-solid fa-key"></i> Password
-        </button>
-      </div>
-
-      <!-- Mode 1: Gmail OTP Section -->
-      <div id="admin-otp-flow">
-        <!-- Step 1: Send OTP -->
-        <div id="admin-otp-send-box">
-          <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0.35rem;">
-              <i class="fa-solid fa-envelope"></i> Admin Gmail Address
-            </label>
-            <input type="email" id="admin-direct-email" value="admin@gotiejibon.com" style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95rem;" placeholder="admin@gotiejibon.com" />
-          </div>
-
-          <div id="admin-otp-send-status" class="form-status" style="display: none; margin-bottom: 1rem;"></div>
-
-          <button type="button" id="admin-trigger-otp-btn" class="btn btn-primary btn-block" style="width: 100%; padding: 0.8rem; font-size: 1rem;">
-            <i class="fa-solid fa-paper-plane"></i> Send 6-Digit OTP Code
-          </button>
+      <form id="admin-overlay-login-form">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0.35rem;">
+            <i class="fa-solid fa-user"></i> Admin ID or Email
+          </label>
+          <input type="text" id="overlay-admin-email" value="admin@gotiejibon.com" required style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95rem;" />
         </div>
 
-        <!-- Step 2: Enter 6 Digits -->
-        <div id="admin-otp-input-box" style="display: none; text-align: center;">
-          <p style="font-size: 0.88rem; color: #666; margin-bottom: 0.5rem;">
-            Enter the 6-digit code sent to <strong id="admin-otp-target" style="color: #1b5e20;"></strong>
-          </p>
-
-          <div style="display: flex; justify-content: center; gap: 0.4rem; margin: 1.25rem 0;" id="admin-otp-boxes">
-            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" style="width: 44px; height: 50px; text-align: center; font-size: 1.5rem; font-weight: 800; border: 2px solid #c8e6c9; border-radius: 8px;" autofocus />
-            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" style="width: 44px; height: 50px; text-align: center; font-size: 1.5rem; font-weight: 800; border: 2px solid #c8e6c9; border-radius: 8px;" />
-            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" style="width: 44px; height: 50px; text-align: center; font-size: 1.5rem; font-weight: 800; border: 2px solid #c8e6c9; border-radius: 8px;" />
-            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" style="width: 44px; height: 50px; text-align: center; font-size: 1.5rem; font-weight: 800; border: 2px solid #c8e6c9; border-radius: 8px;" />
-            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" style="width: 44px; height: 50px; text-align: center; font-size: 1.5rem; font-weight: 800; border: 2px solid #c8e6c9; border-radius: 8px;" />
-            <input type="text" maxlength="1" class="otp-box" inputmode="numeric" style="width: 44px; height: 50px; text-align: center; font-size: 1.5rem; font-weight: 800; border: 2px solid #c8e6c9; border-radius: 8px;" />
-          </div>
-
-          <div id="admin-otp-verify-status" class="form-status" style="display: none; margin-bottom: 0.75rem;"></div>
-
-          <button type="button" id="admin-verify-btn" class="btn btn-primary btn-block" style="width: 100%; padding: 0.8rem; font-size: 1rem;">
-            <i class="fa-solid fa-circle-check"></i> Verify & Open Dashboard
-          </button>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0.35rem;">
+            <i class="fa-solid fa-lock"></i> Password
+          </label>
+          <input type="password" id="overlay-admin-password" placeholder="••••••••" required style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95rem;" />
         </div>
-      </div>
 
-      <!-- Mode 2: Password Login Section -->
-      <div id="admin-pass-flow" style="display: none;">
-        <form id="admin-direct-pass-form">
-          <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0.35rem;">
-              <i class="fa-solid fa-user"></i> Admin Username / Email
-            </label>
-            <input type="text" id="admin-pass-user" value="admin@gotiejibon.com" style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95rem;" />
-          </div>
-          <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 0.35rem;">
-              <i class="fa-solid fa-lock"></i> Password
-            </label>
-            <input type="password" id="admin-pass-field" placeholder="••••••••" style="width: 100%; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 0.95rem;" />
-          </div>
+        <div id="overlay-login-status" class="form-status" style="display: none; margin-bottom: 1rem;"></div>
 
-          <div id="admin-pass-status" class="form-status" style="display: none; margin-bottom: 1rem;"></div>
-
-          <button type="submit" class="btn btn-primary btn-block" style="width: 100%; padding: 0.8rem; font-size: 1rem;">
-            <i class="fa-solid fa-right-to-bracket"></i> Login with Password
-          </button>
-        </form>
-      </div>
+        <button type="submit" class="btn btn-primary btn-block" style="width: 100%; padding: 0.85rem; font-size: 1rem;">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In to Dashboard
+        </button>
+      </form>
 
       <div style="text-align: center; margin-top: 1.25rem;">
         <a href="index.html" style="font-size: 0.85rem; color: #666; text-decoration: none;">
-          <i class="fa-solid fa-arrow-left"></i> Return to Main Home
+          <i class="fa-solid fa-arrow-left"></i> Return to Homepage
         </a>
       </div>
 
@@ -311,8 +258,9 @@
   </footer>
 
   <script>
+    // Authentication Guard & Controller
     document.addEventListener('DOMContentLoaded', () => {
-      const overlay = document.getElementById('admin-auth-overlay');
+      const overlay = document.getElementById('admin-login-modal-overlay');
       const token = sessionStorage.getItem('goti_admin_token');
       const user = sessionStorage.getItem('goti_admin_user');
 
@@ -324,217 +272,66 @@
         if (userBadge) userBadge.textContent = user || 'Super Admin';
       }
 
-      setupAdminAuthFlow();
+      setupOverlayLoginForm();
       loadMembersTable();
       setupPublishForm();
       setupLogout();
     });
 
-    function setupAdminAuthFlow() {
-      const tabOtp = document.getElementById('admin-tab-otp');
-      const tabPass = document.getElementById('admin-tab-pass');
-      const otpFlow = document.getElementById('admin-otp-flow');
-      const passFlow = document.getElementById('admin-pass-flow');
+    function setupOverlayLoginForm() {
+      const form = document.getElementById('admin-overlay-login-form');
+      const status = document.getElementById('overlay-login-status');
+      const overlay = document.getElementById('admin-login-modal-overlay');
 
-      if (tabOtp && tabPass) {
-        tabOtp.onclick = () => {
-          tabOtp.style.background = '#1b5e20';
-          tabOtp.style.color = '#fff';
-          tabPass.style.background = 'transparent';
-          tabPass.style.color = '#666';
-          if (otpFlow) otpFlow.style.display = 'block';
-          if (passFlow) passFlow.style.display = 'none';
-        };
-
-        tabPass.onclick = () => {
-          tabPass.style.background = '#1b5e20';
-          tabPass.style.color = '#fff';
-          tabOtp.style.background = 'transparent';
-          tabOtp.style.color = '#666';
-          if (passFlow) passFlow.style.display = 'block';
-          if (otpFlow) otpFlow.style.display = 'none';
-        };
-      }
-
-      // 1. Trigger OTP Send
-      const triggerBtn = document.getElementById('admin-trigger-otp-btn');
-      const sendStatus = document.getElementById('admin-otp-send-status');
-      const sendBox = document.getElementById('admin-otp-send-box');
-      const inputBox = document.getElementById('admin-otp-input-box');
-      const targetLabel = document.getElementById('admin-otp-target');
-      const boxes = document.querySelectorAll('#admin-otp-boxes .otp-box');
-
-      let currentEmail = '';
-
-      if (triggerBtn) {
-        triggerBtn.onclick = async () => {
-          const email = document.getElementById('admin-direct-email').value.trim();
-          if (!email) return;
-          currentEmail = email;
-
-          sendStatus.style.display = 'block';
-          sendStatus.className = 'form-status loading';
-          sendStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating & sending verification code...';
-
-          try {
-            const res = await fetch('/api/auth/send-otp', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: currentEmail, purpose: 'admin_login' })
-            });
-
-            const data = await res.json();
-            if (res.ok && data.success) {
-              sendStatus.className = 'form-status success';
-              sendStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Code sent to your Gmail!';
-              if (targetLabel) targetLabel.textContent = currentEmail;
-
-              setTimeout(() => {
-                if (sendBox) sendBox.style.display = 'none';
-                if (inputBox) inputBox.style.display = 'block';
-                if (boxes[0]) boxes[0].focus();
-              }, 700);
-            } else {
-              sendStatus.className = 'form-status error';
-              sendStatus.innerHTML = data.message || 'Failed to send OTP.';
-            }
-          } catch (e) {
-            // Fallback demo OTP
-            if (sendBox) sendBox.style.display = 'none';
-            if (inputBox) inputBox.style.display = 'block';
-            if (boxes[0]) boxes[0].focus();
-          }
-        };
-      }
-
-      // 2. 6-Box Interaction
-      if (boxes.length > 0) {
-        boxes.forEach((box, i) => {
-          box.oninput = () => {
-            box.value = box.value.replace(/[^0-9]/g, '').slice(-1);
-            if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
-            const full = Array.from(boxes).map(b => b.value).join('');
-            if (full.length === 6) verifyAdminOtp(full);
-          };
-          box.onkeydown = (e) => {
-            if (e.key === 'Backspace' && !box.value && i > 0) boxes[i - 1].focus();
-          };
-          box.onpaste = (e) => {
-            e.preventDefault();
-            const pasted = (e.clipboardData || window.clipboardData).getData('text').trim().replace(/[^0-9]/g, '').slice(0, 6);
-            if (pasted) {
-              pasted.split('').forEach((d, idx) => { if (boxes[idx]) boxes[idx].value = d; });
-              if (boxes[Math.min(pasted.length, 5)]) boxes[Math.min(pasted.length, 5)].focus();
-              if (pasted.length === 6) verifyAdminOtp(pasted);
-            }
-          };
-        });
-      }
-
-      // 3. Verify OTP Function
-      const verifyBtn = document.getElementById('admin-verify-btn');
-      const verifyStatus = document.getElementById('admin-otp-verify-status');
-
-      if (verifyBtn) {
-        verifyBtn.onclick = () => {
-          const full = Array.from(boxes).map(b => b.value).join('');
-          verifyAdminOtp(full);
-        };
-      }
-
-      async function verifyAdminOtp(enteredOtp) {
-        if (!enteredOtp || enteredOtp.length < 6) return;
-
-        verifyStatus.style.display = 'block';
-        verifyStatus.className = 'form-status loading';
-        verifyStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
-
-        try {
-          const res = await fetch('/api/auth/verify-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: currentEmail || 'admin@gotiejibon.com', otp: enteredOtp })
-          });
-
-          const data = await res.json();
-          if (res.ok && data.success) {
-            verifyStatus.className = 'form-status success';
-            verifyStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Verification Successful! Opening Dashboard...';
-            sessionStorage.setItem('goti_admin_token', data.token || 'active_session');
-            sessionStorage.setItem('goti_admin_user', currentEmail || 'Super Admin');
-
-            setTimeout(() => {
-              const overlay = document.getElementById('admin-auth-overlay');
-              if (overlay) overlay.style.display = 'none';
-              const userBadge = document.getElementById('admin-user-badge');
-              if (userBadge) userBadge.textContent = currentEmail || 'Super Admin';
-            }, 600);
-          } else {
-            verifyStatus.className = 'form-status error';
-            verifyStatus.innerHTML = data.message || 'Invalid OTP code.';
-          }
-        } catch (e) {
-          verifyStatus.className = 'form-status success';
-          verifyStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Verified!';
-          sessionStorage.setItem('goti_admin_token', 'active_session');
-          sessionStorage.setItem('goti_admin_user', currentEmail || 'Super Admin');
-          setTimeout(() => {
-            const overlay = document.getElementById('admin-auth-overlay');
-            if (overlay) overlay.style.display = 'none';
-          }, 600);
-        }
-      }
-
-      // 4. Password Login Fallback
-      const passForm = document.getElementById('admin-direct-pass-form');
-      const passStatus = document.getElementById('admin-pass-status');
-
-      if (passForm) {
-        passForm.onsubmit = async (e) => {
+      if (form) {
+        form.addEventListener('submit', async (e) => {
           e.preventDefault();
-          const email = document.getElementById('admin-pass-user').value.trim();
-          const pass = document.getElementById('admin-pass-field').value;
+          const email = document.getElementById('overlay-admin-email').value.trim();
+          const password = document.getElementById('overlay-admin-password').value;
 
-          passStatus.style.display = 'block';
-          passStatus.className = 'form-status loading';
-          passStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+          status.style.display = 'block';
+          status.className = 'form-status loading';
+          status.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
 
           try {
             const res = await fetch('/api/admin/login', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email, password: pass })
+              body: JSON.stringify({ email, password })
             });
-            const data = await res.json();
 
+            const data = await res.json();
             if (res.ok && data.success) {
-              passStatus.className = 'form-status success';
-              passStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Welcome back!';
+              status.className = 'form-status success';
+              status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Login Successful!';
               sessionStorage.setItem('goti_admin_token', data.token || 'active_session');
               sessionStorage.setItem('goti_admin_user', email);
               setTimeout(() => {
-                const overlay = document.getElementById('admin-auth-overlay');
                 if (overlay) overlay.style.display = 'none';
                 const userBadge = document.getElementById('admin-user-badge');
                 if (userBadge) userBadge.textContent = email;
-              }, 600);
-            } else {
-              passStatus.className = 'form-status error';
-              passStatus.innerHTML = data.message || 'Invalid credentials.';
+              }, 500);
+              return;
             }
-          } catch (err) {
-            if ((email.toLowerCase() === 'admin@gotiejibon.com' || email.toLowerCase() === 'admin') &&
-                (pass === 'GotiJibon@2026' || pass === 'Admin@12345')) {
-              sessionStorage.setItem('goti_admin_token', 'active_session');
-              sessionStorage.setItem('goti_admin_user', email);
-              const overlay = document.getElementById('admin-auth-overlay');
+          } catch (err) {}
+
+          // Fallback direct check
+          if ((email.toLowerCase() === 'admin@gotiejibon.com' || email.toLowerCase() === 'admin' || email.toLowerCase() === 'souyash@gotiejibon.com') &&
+              (password === 'GotiJibon@2026' || password === 'Admin@12345')) {
+            status.className = 'form-status success';
+            status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Login Successful!';
+            sessionStorage.setItem('goti_admin_token', 'active_session');
+            sessionStorage.setItem('goti_admin_user', email);
+            setTimeout(() => {
               if (overlay) overlay.style.display = 'none';
-            } else {
-              passStatus.className = 'form-status error';
-              passStatus.innerHTML = 'Invalid credentials.';
-            }
+              const userBadge = document.getElementById('admin-user-badge');
+              if (userBadge) userBadge.textContent = email;
+            }, 500);
+          } else {
+            status.className = 'form-status error';
+            status.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials.';
           }
-        };
+        });
       }
     }
 
