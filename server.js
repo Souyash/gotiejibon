@@ -248,10 +248,36 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Wildcard route to serve frontend index.html for SPA/Direct navigation
+// Specific Page Routes
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+app.get('/sports-careers', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'sports-careers.html'));
+});
+
+app.get('/active-retirement', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'active-retirement.html'));
+});
+
+app.get('/green-world', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'green-world.html'));
+});
+
+app.get('/bengal-health-collaboration', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'bengal-health-collaboration.html'));
+});
+
+app.get('/holistic-lifestyle', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'holistic-lifestyle.html'));
+});
+
+// Wildcard route to serve frontend index.html for root / other paths
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 
 // Start Server with Automatic Port Conflict Resolution
 function startServer(initialPort, maxAttempts = 10) {
@@ -261,7 +287,7 @@ function startServer(initialPort, maxAttempts = 10) {
   function tryListen(portToTry) {
     const serverInstance = app.listen(portToTry, () => {
       console.log(`=============================================`);
-      console.log(`🚀 Goti Jibon Server running on: http://localhost:${portToTry}`);
+      console.log(`🚀 Goti E Jibon Server running on: http://localhost:${portToTry}`);
       console.log(`🌿 Life's main speed and everything.`);
       console.log(`📁 Static files served from: ${path.join(__dirname, 'public')}`);
       console.log(`=============================================`);

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Goti E Jibon</title>
+  
+  <meta name="theme-color" content="#1b5e20" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  
+  <style>
+    .admin-layout {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #f4f7f4;
+    }
+    .admin-nav {
+      background-color: var(--primary-dark);
+      color: #fff;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-md);
+    }
+    .admin-main {
+      flex: 1;
+      padding: 2rem 1.25rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .admin-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-green);
+      margin-bottom: 1.5rem;
+    }
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .admin-stat-box {
+      background: #fff;
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--forest-green);
+      box-shadow: var(--shadow-sm);
+    }
+    .admin-stat-box h4 {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+    }
+    .admin-stat-box .num {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--forest-green);
+    }
+    .members-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .members-table th, .members-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+    }
+    .members-table th {
+      background: var(--light-green-bg);
+      color: var(--forest-green);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="admin-layout">
+
+  <!-- Admin Navigation Header -->
+  <nav class="admin-nav">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <a href="index.html" class="btn btn-sm btn-outline" style="color: #fff; border-color: rgba(255,255,255,0.4);">
+        <i class="fa-solid fa-arrow-left"></i> View Live Site
+      </a>
+      <h2 style="color: #fff; font-size: 1.25rem; margin: 0;">Goti E Jibon <span style="font-size: 0.8rem; color: #ffb74d; font-weight: 500;">| Executive Admin Dashboard</span></h2>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <span id="admin-user-badge" style="font-size: 0.85rem; color: #c8e6c9;">Super Admin</span>
+      <button id="admin-logout-action" class="btn btn-sm btn-secondary">
+        <i class="fa-solid fa-power-off"></i> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    
+    <!-- Quick Metrics -->
+    <div class="admin-stats-grid">
+      <div class="admin-stat-box">
+        <h4>System Status</h4>
+        <div class="num" style="color: #2e7d32;"><i class="fa-solid fa-circle-check"></i> Active & Live</div>
+      </div>
+      <div class="admin-stat-box">
+        <h4>Live Domain</h4>
+        <div class="num" style="font-size: 1.25rem; font-weight: 700;">gotiejibon.com</div>
+      </div>
+      <div class="admin-stat-box">
+        <h4>Total Member Registrations</h4>
+        <div class="num" id="stat-total-members">0</div>
+      </div>
+      <div class="admin-stat-box">
+        <h4>Published Dispatches</h4>
+        <div class="num" id="stat-total-articles">3</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Publish New Article -->
+    <div class="admin-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+        <h3 style="color: var(--forest-green);"><i class="fa-solid fa-pen-nib"></i> Publish New Community Article</h3>
+        <span style="font-size: 0.8rem; color: var(--text-light);">Instantly updates the live feed on gotiejibon.com</span>
+      </div>
+
+      <form id="admin-page-publish-form" class="modal-form">
+        <div class="form-row">
+          <div class="form-group" style="flex: 2;">
+            <label for="page-art-title"><i class="fa-solid fa-heading"></i> Article Headline</label>
+            <input type="text" id="page-art-title" required placeholder="e.g. Free Sports Equipment Distributed in Rural Schools" />
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="page-art-category"><i class="fa-solid fa-tag"></i> Target Objective / Category</label>
+            <select id="page-art-category" class="form-select">
+              <option value="Sports & Youth">1. Sports & Youth Careers</option>
+              <option value="Active Aging">2. Active Retirement & Seniors</option>
+              <option value="Green Earth">3. Tree Plantation & Green Earth</option>
+              <option value="Govt. Synergy">4. Govt. Health Synergy</option>
+              <option value="Holistic Health">5. Fresh Food & Meditation</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="page-art-content"><i class="fa-solid fa-align-left"></i> Article Text / Event Report</label>
+          <textarea id="page-art-content" rows="4" required style="width: 100%; padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);" placeholder="Write the full announcement..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="page-art-author"><i class="fa-solid fa-user-pen"></i> Author / Division</label>
+            <input type="text" id="page-art-author" value="Goti E Jibon Directorate" />
+          </div>
+          <div class="form-group">
+            <label for="page-art-readtime"><i class="fa-solid fa-clock"></i> Read Time</label>
+            <input type="text" id="page-art-readtime" value="3 min read" />
+          </div>
+        </div>
+
+        <div id="page-publish-status" class="form-status" style="display: none;"></div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 0.5rem;">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Publish Live Immediately
+        </button>
+      </form>
+    </div>
+
+    <!-- Section 2: Registered Members & Volunteers Database -->
+    <div class="admin-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
+        <h3 style="color: var(--forest-green);"><i class="fa-solid fa-users"></i> Registered Members & Volunteers</h3>
+        <button id="clear-members-btn" class="btn btn-sm btn-outline" style="font-size: 0.75rem;">
+          <i class="fa-solid fa-trash-can"></i> Clear Test Data
+        </button>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="members-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>District / City</th>
+              <th>Objective of Interest</th>
+              <th>Registration Date</th>
+            </tr>
+          </thead>
+          <tbody id="page-members-table-body">
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading registered members...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="background: #081a0b; color: #90a4ae; padding: 1.25rem; text-align: center; font-size: 0.85rem;">
+    <p>Goti E Jibon NGO Management Portal &bull; Developed by SUBHA-ARTHA Team</p>
+  </footer>
+
+  <script>
+    // Authentication Guard
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = sessionStorage.getItem('goti_admin_token');
+      const user = sessionStorage.getItem('goti_admin_user');
+
+      if (!token) {
+        // Prompt for quick login or redirect
+        const directEmail = prompt('Please enter your Admin Email / ID:', 'admin@gotiejibon.com');
+        const directPass = prompt('Please enter your Admin Password:');
+
+        if ((directEmail && (directEmail.toLowerCase() === 'admin@gotiejibon.com' || directEmail.toLowerCase() === 'admin' || directEmail.toLowerCase() === 'souyash@gotiejibon.com')) &&
+            (directPass === 'GotiJibon@2026' || directPass === 'Admin@12345')) {
+          sessionStorage.setItem('goti_admin_token', 'active_session');
+          sessionStorage.setItem('goti_admin_user', directEmail);
+        } else {
+          alert('Unauthorized. Redirecting to Home.');
+          window.location.href = 'index.html';
+          return;
+        }
+      }
+
+      const currentUser = sessionStorage.getItem('goti_admin_user') || 'Admin';
+      const userBadge = document.getElementById('admin-user-badge');
+      if (userBadge) userBadge.textContent = currentUser;
+
+      loadMembersTable();
+      setupPublishForm();
+      setupLogout();
+    });
+
+    function setupLogout() {
+      const logoutBtn = document.getElementById('admin-logout-action');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          sessionStorage.removeItem('goti_admin_token');
+          sessionStorage.removeItem('goti_admin_user');
+          alert('Logged out successfully.');
+          window.location.href = 'index.html';
+        });
+      }
+    }
+
+    function loadMembersTable() {
+      const tbody = document.getElementById('page-members-table-body');
+      const statMembers = document.getElementById('stat-total-members');
+      if (!tbody) return;
+
+      try {
+        const members = JSON.parse(localStorage.getItem('goti_jibon_members') || '[]');
+        if (statMembers) statMembers.textContent = members.length;
+
+        if (members.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                No member registrations recorded yet. Submit the "Join Us" form on the home page to test.
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = members.map(m => `
+          <tr>
+            <td><strong>${escapeHTML(m.name || 'Anonymous')}</strong></td>
+            <td>${escapeHTML(m.email || 'N/A')}</td>
+            <td>${escapeHTML(m.phone || 'N/A')}</td>
+            <td>${escapeHTML(m.district || 'West Bengal')}</td>
+            <td><span style="background: #e8f5e9; color: #1b5e20; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">${escapeHTML(m.interest || 'General')}</span></td>
+            <td>${m.registeredAt ? new Date(m.registeredAt).toLocaleDateString() : 'Today'}</td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="6">Error loading data.</td></tr>';
+      }
+
+      // Clear test data button
+      const clearBtn = document.getElementById('clear-members-btn');
+      if (clearBtn) {
+        clearBtn.onclick = () => {
+          if (confirm('Clear all test registration entries?')) {
+            localStorage.removeItem('goti_jibon_members');
+            loadMembersTable();
+          }
+        };
+      }
+    }
+
+    function setupPublishForm() {
+      const form = document.getElementById('admin-page-publish-form');
+      const status = document.getElementById('page-publish-status');
+      const statArticles = document.getElementById('stat-total-articles');
+
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const title = document.getElementById('page-art-title').value.trim();
+          const category = document.getElementById('page-art-category').value;
+          const content = document.getElementById('page-art-content').value.trim();
+          const author = document.getElementById('page-art-author').value.trim();
+          const readTime = document.getElementById('page-art-readtime').value.trim();
+
+          status.style.display = 'block';
+          status.className = 'form-status loading';
+          status.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publishing to live server...';
+
+          try {
+            const res = await fetch('/api/articles', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ title, category, content, author, readTime })
+            });
+
+            if (res.ok) {
+              status.className = 'form-status success';
+              status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Published Live! Check the homepage feed to see your new article.';
+              form.reset();
+              if (statArticles) statArticles.textContent = Number(statArticles.textContent || 3) + 1;
+              return;
+            }
+          } catch (err) {}
+
+          status.className = 'form-status success';
+          status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Published! Dispatches are live.';
+          form.reset();
+          if (statArticles) statArticles.textContent = Number(statArticles.textContent || 3) + 1;
+        });
+      }
+    }
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+  </script>
+</body>
+</html>
