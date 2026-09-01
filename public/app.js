@@ -273,16 +273,15 @@ function initForms() {
 
         if (response.ok && data.success) {
           adminStatus.className = 'form-status success';
-          adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${data.message || 'Login Successful! Opening Dashboard...'}`;
+          adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${data.message || 'Login Successful! Redirecting...'}`;
 
-          sessionStorage.setItem('goti_admin_token', data.token || 'admin_authenticated');
+          const token = data.token || 'admin_authenticated';
+          localStorage.setItem('goti_admin_token', token);
+          localStorage.setItem('goti_admin_user', email);
+          sessionStorage.setItem('goti_admin_token', token);
           sessionStorage.setItem('goti_admin_user', email);
 
-          renderAdminDashboard(email);
-
-          setTimeout(() => {
-            window.location.assign('admin.html');
-          }, 500);
+          window.location.href = 'admin.html';
           return;
         }
       } catch (err) {}
@@ -293,21 +292,20 @@ function initForms() {
 
       if (isEmailValid && isPassValid) {
         adminStatus.className = 'form-status success';
-        adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Login Successful! Opening Dashboard...`;
-        sessionStorage.setItem('goti_admin_token', 'local_admin_session');
+        adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Login Successful! Redirecting...`;
+        localStorage.setItem('goti_admin_token', 'admin_authenticated');
+        localStorage.setItem('goti_admin_user', email);
+        sessionStorage.setItem('goti_admin_token', 'admin_authenticated');
         sessionStorage.setItem('goti_admin_user', email);
 
-        renderAdminDashboard(email);
-
-        setTimeout(() => {
-          window.location.assign('admin.html');
-        }, 500);
+        window.location.href = 'admin.html';
       } else {
         adminStatus.className = 'form-status error';
         adminStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials.`;
       }
     });
   }
+
 
 
   // Setup Admin Dashboard Actions (Publishing, Tabs, Logout)

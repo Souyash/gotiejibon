@@ -265,8 +265,8 @@
 
     function checkAuthAndInit() {
       const overlay = document.getElementById('admin-login-modal-overlay');
-      const token = sessionStorage.getItem('goti_admin_token');
-      const user = sessionStorage.getItem('goti_admin_user');
+      const token = localStorage.getItem('goti_admin_token') || sessionStorage.getItem('goti_admin_token');
+      const user = localStorage.getItem('goti_admin_user') || sessionStorage.getItem('goti_admin_user');
 
       if (!token) {
         if (overlay) overlay.style.display = 'flex';
@@ -309,15 +309,16 @@
 
             const data = await res.json();
             if (res.ok && data.success) {
+              const token = data.token || 'active_session';
               status.className = 'form-status success';
               status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Login Successful!';
-              sessionStorage.setItem('goti_admin_token', data.token || 'active_session');
+              localStorage.setItem('goti_admin_token', token);
+              localStorage.setItem('goti_admin_user', email);
+              sessionStorage.setItem('goti_admin_token', token);
               sessionStorage.setItem('goti_admin_user', email);
-              setTimeout(() => {
-                if (overlay) overlay.style.display = 'none';
-                const userBadge = document.getElementById('admin-user-badge');
-                if (userBadge) userBadge.textContent = email;
-              }, 400);
+              if (overlay) overlay.style.display = 'none';
+              const userBadge = document.getElementById('admin-user-badge');
+              if (userBadge) userBadge.textContent = email;
               return;
             }
           } catch (err) {}
@@ -329,13 +330,13 @@
           if (isEmailValid && isPassValid) {
             status.className = 'form-status success';
             status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Login Successful!';
+            localStorage.setItem('goti_admin_token', 'active_session');
+            localStorage.setItem('goti_admin_user', email);
             sessionStorage.setItem('goti_admin_token', 'active_session');
             sessionStorage.setItem('goti_admin_user', email);
-            setTimeout(() => {
-              if (overlay) overlay.style.display = 'none';
-              const userBadge = document.getElementById('admin-user-badge');
-              if (userBadge) userBadge.textContent = email;
-            }, 400);
+            if (overlay) overlay.style.display = 'none';
+            const userBadge = document.getElementById('admin-user-badge');
+            if (userBadge) userBadge.textContent = email;
           } else {
             status.className = 'form-status error';
             status.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials.';
@@ -348,6 +349,8 @@
       const logoutBtn = document.getElementById('admin-logout-action');
       if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('goti_admin_token');
+          localStorage.removeItem('goti_admin_user');
           sessionStorage.removeItem('goti_admin_token');
           sessionStorage.removeItem('goti_admin_user');
           alert('Logged out successfully.');
@@ -355,6 +358,7 @@
         });
       }
     }
+
 
     function loadMembersTable() {
       const tbody = document.getElementById('page-members-table-body');
