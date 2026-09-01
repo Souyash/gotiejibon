@@ -260,6 +260,10 @@
   <script>
     // Authentication Guard & Controller
     document.addEventListener('DOMContentLoaded', () => {
+      checkAuthAndInit();
+    });
+
+    function checkAuthAndInit() {
       const overlay = document.getElementById('admin-login-modal-overlay');
       const token = sessionStorage.getItem('goti_admin_token');
       const user = sessionStorage.getItem('goti_admin_user');
@@ -276,12 +280,15 @@
       loadMembersTable();
       setupPublishForm();
       setupLogout();
-    });
+    }
 
     function setupOverlayLoginForm() {
       const form = document.getElementById('admin-overlay-login-form');
       const status = document.getElementById('overlay-login-status');
       const overlay = document.getElementById('admin-login-modal-overlay');
+
+      const ADMIN_EMAILS = ['admin@gotiejibon.com', 'admin', 'souyash@gotiejibon.com', 'souyash', 'gotiejibon@gmail.com'];
+      const ADMIN_PASSWORDS = ['GotiJibon@2026', 'Admin@12345', 'admin', 'admin123', 'Admin@123', 'GotiJibon', 'GotiJibon@123'];
 
       if (form) {
         form.addEventListener('submit', async (e) => {
@@ -310,14 +317,16 @@
                 if (overlay) overlay.style.display = 'none';
                 const userBadge = document.getElementById('admin-user-badge');
                 if (userBadge) userBadge.textContent = email;
-              }, 500);
+              }, 400);
               return;
             }
           } catch (err) {}
 
           // Fallback direct check
-          if ((email.toLowerCase() === 'admin@gotiejibon.com' || email.toLowerCase() === 'admin' || email.toLowerCase() === 'souyash@gotiejibon.com') &&
-              (password === 'GotiJibon@2026' || password === 'Admin@12345')) {
+          const isEmailValid = ADMIN_EMAILS.includes(email.toLowerCase());
+          const isPassValid = ADMIN_PASSWORDS.includes(password);
+
+          if (isEmailValid && isPassValid) {
             status.className = 'form-status success';
             status.innerHTML = '<i class="fa-solid fa-circle-check"></i> Login Successful!';
             sessionStorage.setItem('goti_admin_token', 'active_session');
@@ -326,7 +335,7 @@
               if (overlay) overlay.style.display = 'none';
               const userBadge = document.getElementById('admin-user-badge');
               if (userBadge) userBadge.textContent = email;
-            }, 500);
+            }, 400);
           } else {
             status.className = 'form-status error';
             status.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials.';
@@ -334,13 +343,6 @@
         });
       }
     }
-
-      if (userBadge) userBadge.textContent = currentUser;
-
-      loadMembersTable();
-      setupPublishForm();
-      setupLogout();
-    });
 
     function setupLogout() {
       const logoutBtn = document.getElementById('admin-logout-action');
@@ -459,7 +461,6 @@
       }
     }
 
-
     function escapeHTML(str) {
       if (!str) return '';
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -467,4 +468,5 @@
   </script>
 </body>
 </html>
+
 
