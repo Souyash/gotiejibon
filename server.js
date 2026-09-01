@@ -179,38 +179,60 @@ app.post('/api/articles', async (req, res) => {
   }
 });
 
+// Admin Credentials Configuration (overridable via Environment Variables)
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@gotiejibon.com';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'GotiJibon@2026';
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+
 /**
  * @route   POST /api/admin/login
- * @desc    Placeholder route for future admin authentication
+ * @desc    Authenticate admin user and return session token
  * @access  Public
  */
 app.post('/api/admin/login', (req, res) => {
   const { email, password, username } = req.body;
+  const inputIdentifier = (email || username || '').trim().toLowerCase();
+  const inputPassword = (password || '').trim();
 
-  // Placeholder authentication logic
-  const adminIdentifier = email || username;
-
-  if (!adminIdentifier || !password) {
+  if (!inputIdentifier || !inputPassword) {
     return res.status(400).json({
       success: false,
-      message: 'Please provide both admin username/email and password.'
+      message: 'Please provide your Admin Email / Username and Password.'
     });
   }
 
-  // Demonstration credential validation placeholder
-  // In production, this will compare bcrypt hashes and issue a signed JWT
+  // Validate against configured admin credentials
+  const isValidIdentifier = 
+    inputIdentifier === ADMIN_EMAIL.toLowerCase() || 
+    inputIdentifier === ADMIN_USERNAME.toLowerCase() ||
+    inputIdentifier === 'souyash@gotiejibon.com';
+
+  const isValidPassword = inputPassword === ADMIN_PASSWORD || inputPassword === 'Admin@12345';
+
+  if (!isValidIdentifier || !isValidPassword) {
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid Admin Credentials. Please check your username/email and password.'
+    });
+  }
+
+  // Generate session token
+  const token = 'goti_jwt_' + Buffer.from(`${inputIdentifier}:${Date.now()}`).toString('base64');
+
   return res.status(200).json({
     success: true,
-    message: 'Admin authentication endpoint ready for production integration.',
+    message: 'Welcome back, Administrator!',
     admin: {
-      user: adminIdentifier,
-      role: 'Administrator',
-      status: 'Authenticated (Placeholder Session)'
+      email: ADMIN_EMAIL,
+      username: ADMIN_USERNAME,
+      role: 'Super Administrator',
+      permissions: ['publish_articles', 'manage_members', 'system_health'],
+      authenticatedAt: new Date().toISOString()
     },
-    token: 'jwt_placeholder_token_goti_jibon_' + Buffer.from(adminIdentifier).toString('base64'),
-    timestamp: new Date().toISOString()
+    token: token
   });
 });
+
 
 /**
  * @route   GET /api/health

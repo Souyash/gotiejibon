@@ -590,35 +590,107 @@
 
   <!-- ================= MODALS ================= -->
 
-  <!-- 1. Admin Login Modal (Wired to /api/admin/login) -->
+  <!-- 1. Admin Login & Management Dashboard Modal -->
   <div class="modal-backdrop" id="admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title">
-    <div class="modal-box">
+    <div class="modal-box modal-lg">
       <button class="modal-close" aria-label="Close modal">&times;</button>
-      <div class="modal-header">
-        <div class="modal-icon admin-icon"><i class="fa-solid fa-shield-halved"></i></div>
-        <h3 id="admin-modal-title">Admin Portal Login</h3>
-        <p>Access the Goti Jibon management dashboard</p>
-      </div>
       
-      <form id="admin-login-form" class="modal-form">
-        <div class="form-group">
-          <label for="admin-email"><i class="fa-solid fa-envelope"></i> Admin Email or Username</label>
-          <input type="text" id="admin-email" name="email" required placeholder="admin@gotijibon.org" autocomplete="username" />
+      <!-- Login View -->
+      <div id="admin-login-view">
+        <div class="modal-header">
+          <div class="modal-icon admin-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3 id="admin-modal-title">Admin Portal Login</h3>
+          <p>Access the Goti Jibon executive management console</p>
         </div>
         
-        <div class="form-group">
-          <label for="admin-password"><i class="fa-solid fa-key"></i> Password</label>
-          <input type="password" id="admin-password" name="password" required placeholder="••••••••" autocomplete="current-password" />
+        <form id="admin-login-form" class="modal-form">
+          <div class="form-group">
+            <label for="admin-email"><i class="fa-solid fa-envelope"></i> Admin ID or Email</label>
+            <input type="text" id="admin-email" name="email" required placeholder="admin@gotiejibon.com" autocomplete="username" />
+          </div>
+          
+          <div class="form-group">
+            <label for="admin-password"><i class="fa-solid fa-key"></i> Password</label>
+            <input type="password" id="admin-password" name="password" required placeholder="••••••••" autocomplete="current-password" />
+          </div>
+
+          <div id="admin-login-status" class="form-status" style="display: none;"></div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="admin-submit-btn">
+            <i class="fa-solid fa-right-to-bracket"></i> Login as Administrator
+          </button>
+        </form>
+      </div>
+
+      <!-- Logged-in Admin Dashboard View -->
+      <div id="admin-dashboard-view" style="display: none;">
+        <div class="modal-header" style="margin-bottom: 1rem;">
+          <div class="modal-icon admin-icon"><i class="fa-solid fa-user-gear"></i></div>
+          <h3>Executive Admin Console</h3>
+          <p id="admin-welcome-text">Logged in as Super Administrator</p>
         </div>
 
-        <div id="admin-login-status" class="form-status" style="display: none;"></div>
+        <div class="admin-tabs" style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+          <button class="btn btn-sm btn-primary admin-tab-btn active" data-tab="post-tab"><i class="fa-solid fa-pen-to-square"></i> Publish Article</button>
+          <button class="btn btn-sm btn-outline admin-tab-btn" data-tab="members-tab"><i class="fa-solid fa-users"></i> Registered Members</button>
+          <button class="btn btn-sm btn-secondary" id="admin-logout-btn" style="margin-left: auto;"><i class="fa-solid fa-power-off"></i> Logout</button>
+        </div>
 
-        <button type="submit" class="btn btn-primary btn-block" id="admin-submit-btn">
-          <i class="fa-solid fa-right-to-bracket"></i> Login to Console
-        </button>
-      </form>
+        <!-- Tab 1: Publish New Article -->
+        <div id="post-tab" class="admin-tab-content">
+          <form id="admin-publish-article-form" class="modal-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="art-title"><i class="fa-solid fa-heading"></i> Article Title</label>
+                <input type="text" id="art-title" required placeholder="e.g. New Sports Academy Opened in North Bengal" />
+              </div>
+              <div class="form-group">
+                <label for="art-category"><i class="fa-solid fa-tag"></i> Category</label>
+                <select id="art-category" class="form-select">
+                  <option value="Sports & Youth">Sports & Youth</option>
+                  <option value="Active Aging">Active Aging</option>
+                  <option value="Green Earth">Green Earth</option>
+                  <option value="Govt. Synergy">Govt. Synergy</option>
+                  <option value="Holistic Health">Holistic Health</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="art-content"><i class="fa-solid fa-align-left"></i> Article Content / Dispatch</label>
+              <textarea id="art-content" rows="3" required style="width: 100%; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);" placeholder="Write the announcement or event report..."></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="art-author"><i class="fa-solid fa-user-pen"></i> Author / Division</label>
+                <input type="text" id="art-author" value="Goti Jibon Directorate" />
+              </div>
+              <div class="form-group">
+                <label for="art-readtime"><i class="fa-solid fa-clock"></i> Estimated Read Time</label>
+                <input type="text" id="art-readtime" value="3 min read" />
+              </div>
+            </div>
+
+            <div id="admin-publish-status" class="form-status" style="display: none;"></div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Publish Live to Website Feed
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 2: Registered Members -->
+        <div id="members-tab" class="admin-tab-content" style="display: none;">
+          <div id="admin-members-list" style="max-height: 260px; overflow-y: auto; font-size: 0.88rem;">
+            <p style="color: var(--text-muted);">Loading member registrations...</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
 
   <!-- 2. User Login Modal -->
   <div class="modal-backdrop" id="user-modal" role="dialog" aria-modal="true" aria-labelledby="user-modal-title">
