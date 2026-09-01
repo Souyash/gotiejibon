@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="goti-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b5e20" />
+      <stop offset="60%" stop-color="#2e7d32" />
+      <stop offset="100%" stop-color="#4caf50" />
+    </linearGradient>
+    <linearGradient id="orange-spark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9800" />
+      <stop offset="100%" stop-color="#e65100" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular Badge with Nature Green Gradient -->
+  <circle cx="32" cy="32" r="30" fill="url(#goti-bg)" />
+  <circle cx="32" cy="32" r="29" stroke="#81c784" stroke-width="1.5" fill="none" opacity="0.6" />
+
+  <!-- Botanical Vitality Leaf / Arc -->
+  <path d="M12 40 C14 26, 26 14, 40 12 C32 20, 26 30, 24 44 Z" fill="#81c784" opacity="0.35" />
+
+  <!-- Dynamic Athletic Runner Silhouette in Pure White & Vitality Gold -->
+  <!-- Head -->
+  <circle cx="38" cy="18" r="4.5" fill="#ffffff" />
+  
+  <!-- Torso & Core Motion -->
+  <path d="M37 23 L32 37 L38 38 L43 27 Z" fill="#ffffff" />
+  
+  <!-- Back Leg in Forward Drive -->
+  <path d="M32 37 L23 44 L16 46" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  
+  <!-- Front Leg in High Knee Lift -->
+  <path d="M38 38 L43 47 L51 52" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  
+  <!-- Arms Pumping for Speed -->
+  <path d="M39 26 L47 31 L52 28" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <path d="M35 28 L27 33 L22 30" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+  <!-- Speed Particles / Spurt in Vitality Orange -->
+  <circle cx="16" cy="32" r="2.2" fill="url(#orange-spark)" />
+  <circle cx="12" cy="36" r="1.6" fill="url(#orange-spark)" />
+  <circle cx="18" cy="24" r="1.4" fill="#a5d6a7" />
+</svg>
