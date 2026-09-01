@@ -755,11 +755,13 @@
           <p id="admin-welcome-text">Logged in as Super Administrator</p>
         </div>
 
-        <div class="admin-tabs" style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+        <div class="admin-tabs" style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
           <button class="btn btn-sm btn-primary admin-tab-btn active" data-tab="post-tab"><i class="fa-solid fa-pen-to-square"></i> Publish Article</button>
           <button class="btn btn-sm btn-outline admin-tab-btn" data-tab="members-tab"><i class="fa-solid fa-users"></i> Registered Members</button>
+          <a href="admin.html" class="btn btn-sm btn-outline" style="text-decoration: none;"><i class="fa-solid fa-up-right-from-square"></i> Fullscreen Page</a>
           <button class="btn btn-sm btn-secondary" id="admin-logout-btn" style="margin-left: auto;"><i class="fa-solid fa-power-off"></i> Logout</button>
         </div>
+
 
         <!-- Tab 1: Publish New Article -->
         <div id="post-tab" class="admin-tab-content">

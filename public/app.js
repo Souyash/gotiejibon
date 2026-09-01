@@ -273,14 +273,16 @@ function initForms() {
 
         if (response.ok && data.success) {
           adminStatus.className = 'form-status success';
-          adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${data.message || 'Login Successful! Redirecting to Dashboard...'}`;
+          adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${data.message || 'Login Successful! Opening Dashboard...'}`;
 
           sessionStorage.setItem('goti_admin_token', data.token || 'admin_authenticated');
           sessionStorage.setItem('goti_admin_user', email);
 
+          renderAdminDashboard(email);
+
           setTimeout(() => {
-            window.location.href = 'admin.html';
-          }, 400);
+            window.location.assign('admin.html');
+          }, 500);
           return;
         }
       } catch (err) {}
@@ -291,18 +293,22 @@ function initForms() {
 
       if (isEmailValid && isPassValid) {
         adminStatus.className = 'form-status success';
-        adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Login Successful! Redirecting to Dashboard...`;
+        adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Login Successful! Opening Dashboard...`;
         sessionStorage.setItem('goti_admin_token', 'local_admin_session');
         sessionStorage.setItem('goti_admin_user', email);
+
+        renderAdminDashboard(email);
+
         setTimeout(() => {
-          window.location.href = 'admin.html';
-        }, 400);
+          window.location.assign('admin.html');
+        }, 500);
       } else {
         adminStatus.className = 'form-status error';
-        adminStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials. (Check Username & Password)`;
+        adminStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials.`;
       }
     });
   }
+
 
   // Setup Admin Dashboard Actions (Publishing, Tabs, Logout)
   setupAdminDashboard();

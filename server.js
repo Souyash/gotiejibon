@@ -268,9 +268,10 @@ app.get('/api/health', (req, res) => {
 });
 
 // Specific Page Routes
-app.get('/admin', (req, res) => {
+app.get(['/admin', '/admin.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
+
 
 app.get('/sports-careers', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'sports-careers.html'));
