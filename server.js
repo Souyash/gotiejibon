@@ -20,22 +20,26 @@ app.use(express.urlencoded({ extended: true }));
 const otpStore = new Map();
 
 // Gmail SMTP Transporter
-const GMAIL_USER = process.env.GMAIL_USER || '';
-const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD || '';
+const GMAIL_USER = (process.env.GMAIL_USER || '').trim();
+const GMAIL_APP_PASSWORD = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
 
 let transporter = null;
 if (GMAIL_USER && GMAIL_APP_PASSWORD) {
   transporter = nodemailer.createTransport({
     service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
       user: GMAIL_USER,
       pass: GMAIL_APP_PASSWORD
     }
   });
-  console.log(`📧 Gmail SMTP Transporter initialized for: ${GMAIL_USER}`);
+  console.log(`📧 Gmail SMTP Transporter successfully initialized for: ${GMAIL_USER}`);
 } else {
   console.log(`ℹ️ Gmail credentials not set in .env. OTPs will be logged to console and provided in test mode.`);
 }
+
 
 
 // Serve static frontend files from 'public' directory
