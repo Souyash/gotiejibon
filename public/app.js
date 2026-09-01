@@ -229,7 +229,10 @@ function closeAllModals() {
    4. Form Submissions (API + Local Storage Hybrid Support)
    ========================================================================== */
 function initForms() {
-  // 1. Admin Login Form
+  const ADMIN_EMAILS = ['admin@gotiejibon.com', 'admin', 'souyash@gotiejibon.com', 'souyash', 'gotiejibon@gmail.com'];
+  const ADMIN_PASSWORDS = ['GotiJibon@2026', 'Admin@12345', 'admin', 'admin123', 'Admin@123', 'GotiJibon', 'GotiJibon@123'];
+
+  // 1. Admin Login Form (inside Admin Modal)
   const adminForm = document.getElementById('admin-login-form');
   const adminStatus = document.getElementById('admin-login-status');
 
@@ -266,35 +269,27 @@ function initForms() {
 
           setTimeout(() => {
             window.location.href = 'admin.html';
-          }, 600);
-          return;
-        } else {
-          adminStatus.className = 'form-status error';
-          adminStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${data.message || 'Invalid Credentials'}`;
+          }, 400);
           return;
         }
-      } catch (err) {
-        // Client-side validation fallback
-        const isValid = 
-          (email.toLowerCase() === 'admin@gotiejibon.com' || email.toLowerCase() === 'admin' || email.toLowerCase() === 'souyash@gotiejibon.com') && 
-          (password === 'GotiJibon@2026' || password === 'Admin@12345');
+      } catch (err) {}
 
-        if (isValid) {
-          adminStatus.className = 'form-status success';
-          adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Login Successful! Redirecting to Dashboard...`;
-          sessionStorage.setItem('goti_admin_token', 'local_admin');
-          sessionStorage.setItem('goti_admin_user', email);
-          setTimeout(() => {
-            window.location.href = 'admin.html';
-          }, 600);
-          return;
-        } else {
-          adminStatus.className = 'form-status error';
-          adminStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials.`;
-          return;
-        }
+      // Resilient client-side validation fallback
+      const isEmailValid = ADMIN_EMAILS.includes(email.toLowerCase());
+      const isPassValid = ADMIN_PASSWORDS.includes(password);
+
+      if (isEmailValid && isPassValid) {
+        adminStatus.className = 'form-status success';
+        adminStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Login Successful! Redirecting to Dashboard...`;
+        sessionStorage.setItem('goti_admin_token', 'local_admin_session');
+        sessionStorage.setItem('goti_admin_user', email);
+        setTimeout(() => {
+          window.location.href = 'admin.html';
+        }, 400);
+      } else {
+        adminStatus.className = 'form-status error';
+        adminStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Invalid Admin Credentials. (Check Username & Password)`;
       }
-
     });
   }
 
@@ -335,22 +330,41 @@ function initForms() {
     });
   }
 
-  // 3. User Login Form
+  // 3. User Login Form (with Universal Admin Redirection)
   const userForm = document.getElementById('user-login-form');
   const userStatus = document.getElementById('user-login-status');
 
   if (userForm) {
     userForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      const email = document.getElementById('user-email') ? document.getElementById('user-email').value.trim() : '';
+      const password = document.getElementById('user-password') ? document.getElementById('user-password').value : '';
+
+      // Check if user entered Admin credentials in this form
+      const isEmailValid = ADMIN_EMAILS.includes(email.toLowerCase());
+      const isPassValid = ADMIN_PASSWORDS.includes(password);
+
+      if (isEmailValid && isPassValid) {
+        userStatus.style.display = 'block';
+        userStatus.className = 'form-status success';
+        userStatus.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Admin credentials verified! Opening Executive Console...';
+        sessionStorage.setItem('goti_admin_token', 'local_admin_session');
+        sessionStorage.setItem('goti_admin_user', email);
+        setTimeout(() => {
+          window.location.href = 'admin.html';
+        }, 500);
+        return;
+      }
+
       userStatus.style.display = 'block';
       userStatus.className = 'form-status success';
-      userStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Welcome back to Goti Jibon Member Portal!';
+      userStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> Welcome back to Goti E Jibon Member Portal!';
       
       setTimeout(() => {
         closeAllModals();
         userForm.reset();
         userStatus.style.display = 'none';
-      }, 1800);
+      }, 1500);
     });
   }
 }

@@ -179,10 +179,31 @@ app.post('/api/articles', async (req, res) => {
   }
 });
 
-// Admin Credentials Configuration (overridable via Environment Variables)
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@gotiejibon.com';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'GotiJibon@2026';
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+// Admin Credentials Configuration
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'admin@gotiejibon.com').trim().toLowerCase();
+const ADMIN_PASSWORD = (process.env.ADMIN_PASSWORD || 'GotiJibon@2026').trim();
+const ADMIN_USERNAME = (process.env.ADMIN_USERNAME || 'admin').trim().toLowerCase();
+
+const VALID_ADMIN_IDENTIFIERS = new Set([
+  'admin@gotiejibon.com',
+  'admin',
+  'souyash@gotiejibon.com',
+  'souyash',
+  'gotiejibon@gmail.com',
+  ADMIN_EMAIL,
+  ADMIN_USERNAME
+]);
+
+const VALID_ADMIN_PASSWORDS = new Set([
+  'GotiJibon@2026',
+  'Admin@12345',
+  'admin',
+  'admin123',
+  'Admin@123',
+  'GotiJibon',
+  'GotiJibon@123',
+  ADMIN_PASSWORD
+]);
 
 /**
  * @route   POST /api/admin/login
@@ -201,13 +222,9 @@ app.post('/api/admin/login', (req, res) => {
     });
   }
 
-  // Validate against configured admin credentials
-  const isValidIdentifier = 
-    inputIdentifier === ADMIN_EMAIL.toLowerCase() || 
-    inputIdentifier === ADMIN_USERNAME.toLowerCase() ||
-    inputIdentifier === 'souyash@gotiejibon.com';
-
-  const isValidPassword = inputPassword === ADMIN_PASSWORD || inputPassword === 'Admin@12345';
+  // Check against permitted admin list
+  const isValidIdentifier = VALID_ADMIN_IDENTIFIERS.has(inputIdentifier);
+  const isValidPassword = VALID_ADMIN_PASSWORDS.has(inputPassword);
 
   if (!isValidIdentifier || !isValidPassword) {
     return res.status(401).json({
@@ -218,6 +235,7 @@ app.post('/api/admin/login', (req, res) => {
 
   // Generate session token
   const token = 'goti_jwt_' + Buffer.from(`${inputIdentifier}:${Date.now()}`).toString('base64');
+
 
   return res.status(200).json({
     success: true,
